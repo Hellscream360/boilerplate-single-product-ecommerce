@@ -255,9 +255,21 @@
                         (Development mode: emails are not actually sent)
                       </p>
                     </div>
+                    
+                    <!-- Account creation suggestion -->
+                    <div class="mt-6 border-t border-green-100 pt-6">
+                      <p class="text-sm text-gray-600">Want to track your order and make future purchases easier?</p>
+                      <button
+                        @click="showAuthModal = true"
+                        class="mt-3 w-full justify-center rounded-lg bg-white px-4 py-2 text-sm font-medium text-green-700 shadow-sm ring-1 ring-green-700 hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                      >
+                        Create an Account
+                      </button>
+                    </div>
+
                     <button
                       @click="$emit('close')"
-                      class="mt-6 w-full justify-center rounded-lg bg-green-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition duration-150 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-200"
+                      class="mt-4 w-full justify-center rounded-lg bg-green-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition duration-150 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-200"
                     >
                       Back to Shop
                     </button>
@@ -339,6 +351,7 @@ const clientSecret = ref(null);
 const paymentStatus = ref(null);
 const paymentError = ref('');
 const emailPreviewUrl = ref('');
+const showAuthModal = ref(false);
 
 // Watch isOpen to manage body scroll and transitions
 watch(() => props.isOpen, (newValue) => {

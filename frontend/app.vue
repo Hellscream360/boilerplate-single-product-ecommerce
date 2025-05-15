@@ -8,6 +8,9 @@
             MonoProduit
           </NuxtLink>
         </div>
+        <div class="flex items-center">
+          <AuthButton />
+        </div>
       </nav>
     </header>
 
