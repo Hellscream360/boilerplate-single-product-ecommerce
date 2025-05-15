@@ -1,5 +1,21 @@
 <template>
-  <div>
-    <h1>Hello World</h1>
+  <div class="min-h-screen bg-gray-50">
+    <!-- En-tête -->
+    <header class="bg-white shadow-sm">
+      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center">
+          <NuxtLink to="/" class="text-xl font-bold text-gray-900">
+            MonoProduit
+          </NuxtLink>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <NuxtPage />
+    </main>
   </div>
 </template>
+
+
