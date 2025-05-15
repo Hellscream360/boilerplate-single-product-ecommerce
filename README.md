@@ -24,12 +24,14 @@ A minimal and developer-friendly boilerplate for selling **a single product onli
 
 ## 📁 Project Structure
 
+```bash
 monoproduct-ecommerce/
 ├── frontend/       # Nuxt 3 frontend
 ├── backend/        # Strapi CMS backend
 ├── .env.example    # Sample environment config
 ├── .gitignore
 └── README.md
+```
 
 ---
 
