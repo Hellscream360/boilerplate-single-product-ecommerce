@@ -74,136 +74,220 @@
 
             <!-- Panel content -->
             <div class="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
-              <!-- Order summary -->
-              <div class="mb-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4" v-if="!isMobile">Order Summary</h3>
-                <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
-                  <img 
-                    :src="productImage" 
-                    :alt="product?.title" 
-                    class="w-16 h-16 object-contain"
-                  >
-                  <div class="flex-1">
-                    <h4 class="font-medium text-gray-900">{{ product?.title }}</h4>
-                    <div class="mt-1 flex items-center justify-between">
-                      <p class="text-gray-600">${{ product?.price }} × {{ quantity }}</p>
-                      <p class="font-medium text-gray-900">${{ (product?.price * quantity).toFixed(2) }}</p>
+              <template v-if="currentStep === 'billing'">
+                <!-- Order summary -->
+                <div class="mb-6">
+                  <h3 class="text-lg font-semibold text-gray-900 mb-4" v-if="!isMobile">Order Summary</h3>
+                  <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
+                    <img 
+                      :src="productImage" 
+                      :alt="product?.title" 
+                      class="w-16 h-16 object-contain"
+                    >
+                    <div class="flex-1">
+                      <h4 class="font-medium text-gray-900">{{ product?.title }}</h4>
+                      <div class="mt-1 flex items-center justify-between">
+                        <p class="text-gray-600">{{ product?.price }}€ × {{ quantity }}</p>
+                        <p class="font-medium text-gray-900">{{ (product?.price * quantity).toFixed(2) }}€</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Billing information form -->
-              <form @submit.prevent="handleSubmit" class="space-y-4">
-                <div>
-                  <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                  <input 
-                    type="email" 
-                    id="email" 
-                    v-model="formData.email"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    required
+                <!-- Billing information form -->
+                <form @submit.prevent="handleProceedToPayment" class="space-y-6">
+                  <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input 
+                      type="email" 
+                      id="email" 
+                      v-model="formData.email"
+                      class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
+                      placeholder="your@email.com"
+                      required
+                    >
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label for="firstName" class="block text-sm font-medium text-gray-700">First name</label>
+                      <input 
+                        type="text" 
+                        id="firstName" 
+                        v-model="formData.firstName"
+                        class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
+                        placeholder="John"
+                        required
+                      >
+                    </div>
+                    <div>
+                      <label for="lastName" class="block text-sm font-medium text-gray-700">Last name</label>
+                      <input 
+                        type="text" 
+                        id="lastName" 
+                        v-model="formData.lastName"
+                        class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
+                        placeholder="Doe"
+                        required
+                      >
+                    </div>
+                  </div>
+
+                  <div>
+                    <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+                    <input 
+                      type="text" 
+                      id="address" 
+                      v-model="formData.address"
+                      class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
+                      placeholder="123 Street Name"
+                      required
+                    >
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+                      <input 
+                        type="text" 
+                        id="city" 
+                        v-model="formData.city"
+                        class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
+                        placeholder="City"
+                        required
+                      >
+                    </div>
+                    <div>
+                      <label for="postalCode" class="block text-sm font-medium text-gray-700">Postal code</label>
+                      <input 
+                        type="text" 
+                        id="postalCode" 
+                        v-model="formData.postalCode"
+                        class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
+                        placeholder="000000"
+                        required
+                      >
+                    </div>
+                  </div>
+
+                  <div>
+                    <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+                    <select 
+                      id="country" 
+                      v-model="formData.country"
+                      class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
+                      required
+                    >
+                      <option value="">Select a country</option>
+                      <option value="FR">France</option>
+                      <option value="US">United States</option>
+                      <option value="GB">United Kingdom</option>
+                    </select>
+                  </div>
+
+                  <!-- Submit button -->
+                  <div class="mt-6">
+                    <button
+                      type="submit"
+                      class="w-full justify-center rounded-lg bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition duration-150 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 disabled:opacity-50"
+                      :disabled="isLoading"
+                    >
+                      <span v-if="isLoading" class="flex items-center justify-center gap-2">
+                        <svg class="h-5 w-5 animate-spin" viewBox="0 0 24 24">
+                          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                        </svg>
+                        Processing...
+                      </span>
+                      <span v-else>
+                        Continue to Payment
+                      </span>
+                    </button>
+                  </div>
+                </form>
+              </template>
+
+              <template v-else-if="currentStep === 'payment'">
+                <div class="mb-6">
+                  <button
+                    type="button"
+                    class="flex items-center text-sm text-gray-500 hover:text-gray-700"
+                    @click="currentStep = 'billing'"
                   >
+                    <svg class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                    </svg>
+                    Back to Billing
+                  </button>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label for="firstName" class="block text-sm font-medium text-gray-700">First name</label>
-                    <input 
-                      type="text" 
-                      id="firstName" 
-                      v-model="formData.firstName"
-                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      required
+                <div class="mb-6">
+                  <h3 class="text-lg font-semibold text-gray-900 mb-4">Payment Details</h3>
+                  <StripePaymentForm
+                    v-if="clientSecret"
+                    :amount="(product?.price * quantity).toFixed(2)"
+                    :client-secret="clientSecret"
+                    @success="handlePaymentSuccess"
+                    @error="handlePaymentError"
+                  />
+                </div>
+              </template>
+
+              <template v-else-if="currentStep === 'completed'">
+                <div class="mb-6">
+                  <div v-if="paymentStatus === 'success'" class="rounded-lg bg-green-50 p-6 text-center">
+                    <svg class="mx-auto h-12 w-12 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <h3 class="mt-4 text-lg font-medium text-green-800">Payment Successful!</h3>
+                    <p class="mt-2 text-sm text-green-600">
+                      Thank you for your purchase. A confirmation email will be sent to {{ formData.email }}.
+                    </p>
+                    <div v-if="emailPreviewUrl" class="mt-4 text-sm">
+                      <a 
+                        :href="emailPreviewUrl" 
+                        target="_blank" 
+                        class="text-indigo-600 hover:text-indigo-500 underline"
+                      >
+                        View Test Email
+                      </a>
+                      <p class="mt-1 text-gray-500 text-xs">
+                        (Development mode: emails are not actually sent)
+                      </p>
+                    </div>
+                    <button
+                      @click="$emit('close')"
+                      class="mt-6 w-full justify-center rounded-lg bg-green-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition duration-150 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-200"
                     >
+                      Back to Shop
+                    </button>
                   </div>
-                  <div>
-                    <label for="lastName" class="block text-sm font-medium text-gray-700">Last name</label>
-                    <input 
-                      type="text" 
-                      id="lastName" 
-                      v-model="formData.lastName"
-                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      required
-                    >
-                  </div>
-                </div>
 
-                <div>
-                  <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
-                  <input 
-                    type="text" 
-                    id="address" 
-                    v-model="formData.address"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    required
-                  >
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-                    <input 
-                      type="text" 
-                      id="city" 
-                      v-model="formData.city"
-                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      required
-                    >
-                  </div>
-                  <div>
-                    <label for="postalCode" class="block text-sm font-medium text-gray-700">Postal code</label>
-                    <input 
-                      type="text" 
-                      id="postalCode" 
-                      v-model="formData.postalCode"
-                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      required
-                    >
+                  <div v-else-if="paymentStatus === 'error'" class="rounded-lg bg-red-50 p-6 text-center">
+                    <svg class="mx-auto h-12 w-12 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <h3 class="mt-4 text-lg font-medium text-red-800">Payment Failed</h3>
+                    <p class="mt-2 text-sm text-red-600">
+                      {{ paymentError }}
+                    </p>
+                    <div class="mt-6 space-y-3">
+                      <button
+                        @click="currentStep = 'payment'"
+                        class="w-full justify-center rounded-lg bg-red-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition duration-150 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-200"
+                      >
+                        Try Again
+                      </button>
+                      <button
+                        @click="$emit('close')"
+                        class="w-full justify-center rounded-lg bg-gray-100 px-4 py-3 text-sm font-semibold text-gray-600 shadow-sm transition duration-150 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                      >
+                        Cancel Payment
+                      </button>
+                    </div>
                   </div>
                 </div>
-
-                <div>
-                  <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-                  <select 
-                    id="country" 
-                    v-model="formData.country"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    required
-                  >
-                    <option value="">Select a country</option>
-                    <option value="FR">France</option>
-                    <option value="US">United States</option>
-                    <option value="GB">United Kingdom</option>
-                  </select>
-                </div>
-              </form>
-            </div>
-
-            <!-- Fixed bottom section with action buttons -->
-            <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
-              <div class="flex flex-col gap-4">
-                <div class="flex items-center justify-between text-base font-medium text-gray-900">
-                  <p>Total</p>
-                  <p>${{ (product?.price * quantity).toFixed(2) }}</p>
-                </div>
-                <button 
-                  type="button" 
-                  @click="handleProceedToPayment"
-                  class="w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
-                  :disabled="isLoading"
-                >
-                  <span v-if="isLoading">Processing...</span>
-                  <span v-else>Proceed to Payment</span>
-                </button>
-                <button 
-                  type="button" 
-                  @click="$emit('close')"
-                  class="w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                >
-                  Cancel
-                </button>
-              </div>
+              </template>
             </div>
           </div>
         </div>
@@ -246,9 +330,15 @@ const productImage = computed(() => {
 });
 
 const emit = defineEmits(['close', 'proceed-to-payment']);
+const { $stripe } = useNuxtApp();
 
 const isLoading = ref(false);
 const isMobile = ref(false);
+const currentStep = ref('billing');
+const clientSecret = ref(null);
+const paymentStatus = ref(null);
+const paymentError = ref('');
+const emailPreviewUrl = ref('');
 
 // Watch isOpen to manage body scroll and transitions
 watch(() => props.isOpen, (newValue) => {
@@ -288,15 +378,71 @@ onUnmounted(() => {
 const handleProceedToPayment = async () => {
   isLoading.value = true;
   try {
-    emit('proceed-to-payment', {
-      billingDetails: formData.value,
-      product: props.product
+    // Call the API to create a payment intent
+    const response = await fetch('/api/create-payment-intent', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount: props.product.price * props.quantity,
+      }),
     });
+
+    if (!response.ok) {
+      throw new Error('Failed to create payment intent');
+    }
+
+    const data = await response.json();
+    clientSecret.value = data.clientSecret;
+    currentStep.value = 'payment';
   } catch (error) {
-    console.error('Error processing payment:', error);
+    console.error('Error creating payment intent:', error);
+    // Show error to user
+    alert('There was an error processing your payment. Please try again.');
   } finally {
     isLoading.value = false;
   }
+};
+
+const handlePaymentSuccess = async (paymentIntent) => {
+  console.log('Payment successful:', paymentIntent);
+  paymentStatus.value = 'success';
+  
+  try {
+    // Send confirmation email
+    const response = await fetch('/api/send-confirmation-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: formData.value.email,
+        orderDetails: {
+          product: props.product,
+          quantity: props.quantity,
+          amount: (props.product.price * props.quantity).toFixed(2),
+          paymentIntentId: paymentIntent.id
+        }
+      }),
+    });
+
+    const data = await response.json();
+    if (data.previewUrl) {
+      emailPreviewUrl.value = data.previewUrl;
+    }
+  } catch (error) {
+    console.error('Error sending confirmation email:', error);
+  }
+
+  currentStep.value = 'completed';
+};
+
+const handlePaymentError = (error) => {
+  console.error('Payment failed:', error);
+  paymentStatus.value = 'error';
+  paymentError.value = error.message || 'An error occurred during payment.';
+  currentStep.value = 'completed';
 };
 
 const handleBackdropClick = (event) => {

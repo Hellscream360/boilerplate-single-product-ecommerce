@@ -33,10 +33,10 @@
         <!-- Quantity selector -->
         <div class="mt-8">
           <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
-          <div class="mt-2 flex items-center gap-3">
+          <div class="mt-1.5 flex items-center gap-3">
             <button 
               type="button"
-              class="rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-200"
+              class="rounded-lg bg-gray-100 p-3 text-gray-600 shadow-sm transition duration-150 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-200"
               :disabled="quantity <= 1"
               @click="quantity--"
             >
@@ -49,11 +49,11 @@
               id="quantity"
               v-model.number="quantity"
               min="1"
-              class="block w-20 rounded-md border-gray-300 text-center shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              class="block w-20 rounded-lg border-gray-200 bg-white px-4 py-3 text-center text-gray-700 shadow-sm transition duration-150 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
             >
             <button 
               type="button"
-              class="rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-200"
+              class="rounded-lg bg-gray-100 p-3 text-gray-600 shadow-sm transition duration-150 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-200"
               @click="quantity++"
             >
               <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

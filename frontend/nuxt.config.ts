@@ -8,7 +8,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       strapiUrl: process.env.STRAPI_URL || 'http://localhost:1337',
-      strapiToken: process.env.STRAPI_API_READ_ONLY || ''
+      strapiToken: process.env.STRAPI_API_READ_ONLY || '',
+      stripePublicKey: process.env.STRIPE_PUBLIC_KEY || ''
     }
   },
   hooks: {
