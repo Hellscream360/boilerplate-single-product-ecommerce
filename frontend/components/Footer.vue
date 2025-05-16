@@ -8,8 +8,7 @@
         <div class="flex items-center space-x-4">
           <div class="relative inline-block text-left">
             <select
-              :value="currentLocale"
-              @change="switchLanguage"
+              v-model="selectedLocale"
               class="appearance-none block pl-4 pr-8 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
             >
               <option value="en">🇬🇧 English</option>
@@ -28,26 +27,32 @@
 </template>
 
 <script setup>
-const { t } = useI18n();
-const router = useRouter();
+const { t, locale: i18nLocale } = useI18n();
 const route = useRoute();
 
-// Compute current locale based on route
-const currentLocale = computed(() => {
-  return route.fullPath.startsWith('/fr') ? 'fr' : 'en';
+// Utiliser v-model avec un computed qui gère la lecture et l'écriture
+const selectedLocale = computed({
+  get() {
+    return route.fullPath.startsWith('/fr') ? 'fr' : 'en';
+  },
+  set(newLocale) {
+    const currentPath = route.fullPath.replace(/^\/fr/, '');
+    const newPath = newLocale === 'fr' ? `/fr${currentPath}` : currentPath;
+    
+    // Mettre à jour la locale
+    i18nLocale.value = newLocale;
+    
+    // Naviguer vers la nouvelle URL
+    navigateTo(newPath);
+  }
 });
 
-const switchLanguage = async (event) => {
-  const newLocale = event.target.value;
-  const currentPath = route.fullPath.replace(/^\/fr/, '');
-  const newPath = newLocale === 'fr' ? `/fr${currentPath}` : currentPath;
-  
-  // Navigate and update locale
-  await navigateTo(newPath, { 
-    locale: newLocale,
-    redirectCode: 301
-  });
-};
+// Initialiser la langue au montage
+onMounted(() => {
+  if (route.fullPath.startsWith('/fr')) {
+    i18nLocale.value = 'fr';
+  }
+});
 </script>
 
 <style scoped>
@@ -57,4 +62,4 @@ select {
   -moz-appearance: none;
   appearance: none;
 }
-</style> 
+</style>
