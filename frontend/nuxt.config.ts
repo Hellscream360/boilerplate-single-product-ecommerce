@@ -30,11 +30,6 @@ export default defineNuxtConfig({
       stripePublicKey: process.env.STRIPE_PUBLIC_KEY || ''
     }
   },
-  hooks: {
-    'app:created'() {
-      console.log('Strapi URL:', process.env.STRAPI_URL || 'http://localhost:1337')
-    }
-  },
   vite: {
     plugins: [
       tailwindcss(),
