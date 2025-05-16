@@ -18,6 +18,7 @@ A minimal and developer-friendly boilerplate for selling **a single product onli
 - 📦 Order history stored in Strapi
 - 💳 Stripe payment integration (Checkout)
 - 🔐 Secure admin panel with Strapi authentication
+- 🌍 Internationalization support (English and French)
 - ⚙️ Developer-friendly and easy to deploy
 
 ---
@@ -26,9 +27,11 @@ A minimal and developer-friendly boilerplate for selling **a single product onli
 
 ```bash
 monoproduct-ecommerce/
-├── frontend/       # Nuxt 3 frontend
-├── backend/        # Strapi CMS backend
-├── .env.example    # Sample environment config
+├── frontend/           # Nuxt 3 frontend
+│   ├── i18n/          # Internationalization
+│   │   └── locales/   # Translation files (en.json, fr.json)
+├── backend/           # Strapi CMS backend
+├── .env.example       # Sample environment config
 ├── .gitignore
 └── README.md
 ```
@@ -40,8 +43,8 @@ monoproduct-ecommerce/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/monoproduct-ecommerce.git
-cd monoproduct-ecommerce
+git clone https://github.com/hellscream360/boilerplate-single-product-ecommerce.git
+cd boilerplate-single-product-ecommerce
 ```
 
 ### 2. Install & run frontend

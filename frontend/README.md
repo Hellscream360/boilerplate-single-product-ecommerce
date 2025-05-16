@@ -38,6 +38,39 @@ yarn dev
 bun run dev
 ```
 
+## Internationalization (i18n)
+
+The application supports multiple languages with [Nuxt i18n](https://i18n.nuxtjs.org/). Currently supported languages:
+
+- English (default)
+- French
+
+### Structure
+
+Translation files are located in the `i18n/locales` directory:
+```bash
+i18n/
+└── locales/
+    ├── en.json    # English translations
+    └── fr.json    # French translations
+```
+
+### URL Strategy
+
+The application uses the `prefix_except_default` strategy:
+- English (default): `/product`
+- French: `/fr/product`
+
+### Adding New Translations
+
+1. Add your translation key in both `en.json` and `fr.json`
+2. Use the translation in your components with the `t()` function:
+```vue
+<template>
+  <div>{{ t('your.translation.key') }}</div>
+</template>
+```
+
 ## Production
 
 Build the application for production:
