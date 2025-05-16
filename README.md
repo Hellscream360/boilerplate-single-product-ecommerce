@@ -31,6 +31,8 @@ monoproduct-ecommerce/
 │   ├── i18n/          # Internationalization
 │   │   └── locales/   # Translation files (en.json, fr.json)
 ├── backend/           # Strapi CMS backend
+│   ├── src/
+│   │   └── seeds/    # Seed data for initialization
 ├── .env.example       # Sample environment config
 ├── .gitignore
 └── README.md
@@ -61,4 +63,139 @@ npm run dev
 cd backend
 npm install
 npm run develop
+```
+
+### 4. Initialize the database
+
+After creating your admin account in Strapi:
+
+```bash
+cd backend
+npm run strapi seed
+```
+
+This will create the product with all its translations.
+
+---
+
+## 📦 Product Structure
+
+The Product Content Type is configured with:
+
+### Main Fields (all translated except price and stock)
+- `title`: Product title (text)
+- `description`: Detailed description (long text)
+- `price`: Price (decimal)
+- `stock`: Available stock (integer)
+- `features`: List of features (JSON)
+
+### Internationalization
+- All text fields are configured for translation (EN/FR)
+- Price and stock are shared between translations
+- Features are also translatable
+
+The schema is pre-configured in:
+- `backend/src/api/product/content-types/product/schema.json`
+
+---
+
+## 🚀 Strapi Setup
+
+### 1. Initial Setup
+
+```bash
+# Install dependencies
+cd backend
+npm install
+
+# Copy environment file
+cp .env.example .env
+
+# Configure environment variables in .env
+```
+
+### 2. First Launch
+
+```bash
+npm run develop
+```
+
+On first launch:
+1. Strapi will ask you to create an admin account
+2. Fill in the required information (email, password)
+3. Log in to the admin interface
+
+### 3. Content Type Configuration
+
+The Product Content Type is automatically configured with:
+- Title and description (translated)
+- Price and stock
+- Availability status
+- Features in JSON (translated)
+- Images
+
+### 4. Internationalization Setup
+
+1. In the Strapi admin interface:
+   - Go to Settings > Internationalization
+   - Verify that English (en) is the default language
+   - Add French (fr) as an additional language
+
+### 5. Data Initialization
+
+```bash
+npm run strapi seed
+```
+
+This command will:
+- Create the product in English
+- Create its French translation
+- Link both versions together
+
+### 6. Permissions Setup
+
+1. In the Strapi admin interface:
+   - Go to Settings > Roles
+   - Select the "Public" role
+   - In the Product section, enable these permissions:
+     - find
+     - findOne
+   - Save changes
+
+### 7. API Token Creation
+
+1. In the Strapi admin interface:
+   - Go to Settings > API Tokens
+   - Click on "Create new API Token"
+   - Name: "Frontend Read Access"
+   - Type: "Read-only"
+   - Copy the generated token
+   - Paste it in the frontend's `.env` file:
+     ```
+     STRAPI_API_READ_ONLY=your-api-token
+     ```
+
+### 8. Verification
+
+To verify everything is properly configured:
+1. Strapi API should be accessible at `http://localhost:1337`
+2. Product should be visible in the admin interface
+3. Translations should be available in FR and EN
+4. Public API requests should work
+
+---
+
+## Environment Variables
+
+### Frontend (.env)
+```
+STRAPI_URL=http://localhost:1337
+STRAPI_API_READ_ONLY=your-api-token
+STRIPE_PUBLIC_KEY=your-stripe-public-key
+```
+
+### Backend (.env)
+```
+STRIPE_SECRET_KEY=your-stripe-secret-key
+STRIPE_WEBHOOK_SECRET=your-stripe-webhook-secret
 ```
