@@ -151,7 +151,7 @@ const productDescription = computed(() => product.value?.description);
 const productAvailable = computed(() => product.value?.available);
 const productImage = computed(() => {
   const firstImage = product.value?.image?.[0];
-  // On utilise le format medium pour une meilleure performance
+  // Using medium format for better performance
   const imageUrl = firstImage?.formats?.medium?.url || firstImage?.url;
   
   if (imageUrl?.startsWith('/')) {
@@ -162,7 +162,7 @@ const productImage = computed(() => {
 });
 
 const handleBuyNow = () => {
-  // TODO: Intégrer avec Stripe Checkout
-  console.log('Achat en cours...')
+  // TODO: Integrate with Stripe Checkout
+  console.log('Processing purchase...')
 }
 </script>

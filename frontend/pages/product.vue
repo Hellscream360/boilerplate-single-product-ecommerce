@@ -140,7 +140,7 @@ const productPrice = computed(() => product.value?.price);
 const productAvailable = computed(() => product.value?.available);
 const productImage = computed(() => {
   const firstImage = product.value?.image?.[0];
-  // On utilise le format large pour la page produit
+  // Using large format for product page
   const imageUrl = firstImage?.formats?.large?.url || firstImage?.url;
   
   if (imageUrl?.startsWith('/')) {
