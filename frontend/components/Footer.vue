@@ -30,24 +30,24 @@
 const { t, locale: i18nLocale } = useI18n();
 const route = useRoute();
 
-// Utiliser v-model avec un computed qui gère la lecture et l'écriture
+// Use v-model with a computed property that handles reading and writing
 const selectedLocale = computed({
   get() {
     return route.fullPath.startsWith('/fr') ? 'fr' : 'en';
   },
-  set(newLocale) {
+  async set(newLocale) {
     const currentPath = route.fullPath.replace(/^\/fr/, '');
     const newPath = newLocale === 'fr' ? `/fr${currentPath}` : currentPath;
     
-    // Mettre à jour la locale
-    i18nLocale.value = newLocale;
+    // Navigate to the new URL and wait for completion
+    await navigateTo(newPath);
     
-    // Naviguer vers la nouvelle URL
-    navigateTo(newPath);
+    // Update the locale after navigation is complete
+    i18nLocale.value = newLocale;
   }
 });
 
-// Initialiser la langue au montage
+// Initialize language on mount
 onMounted(() => {
   if (route.fullPath.startsWith('/fr')) {
     i18nLocale.value = 'fr';

@@ -5,7 +5,7 @@
       @click="showAuthModal = true"
       class="text-gray-500 hover:text-gray-700"
     >
-      Sign in
+      {{ $t('auth.signIn') }}
     </button>
     
     <div v-else class="relative">
@@ -32,7 +32,7 @@
         class="absolute right-0 mt-2 w-48 rounded-lg bg-white py-2 shadow-xl border border-gray-100 z-50 transform transition-all duration-200 ease-out"
       >
         <div class="px-4 py-2 border-b border-gray-50">
-          <p class="text-sm text-gray-500">Connecté en tant que</p>
+          <p class="text-sm text-gray-500">{{ $t('auth.loggedInAs') }}</p>
           <p class="text-sm font-medium text-gray-900 truncate">{{ user.email }}</p>
         </div>
         <a
@@ -40,7 +40,7 @@
           class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors duration-200"
           @click.prevent="handleLogout"
         >
-          Se déconnecter
+          {{ $t('auth.logout') }}
         </a>
       </div>
     </div>
@@ -55,6 +55,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+
+const nuxtApp = useNuxtApp();
+const { $i18n } = nuxtApp;
 
 const user = ref(null);
 const showAuthModal = ref(false);

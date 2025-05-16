@@ -12,7 +12,7 @@
             class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none"
             @click="$emit('close')"
           >
-            <span class="sr-only">Close</span>
+            <span class="sr-only">{{ t('auth.close') }}</span>
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -24,22 +24,22 @@
           <div class="w-full">
             <div class="mb-6 text-center">
               <h3 class="text-lg font-medium leading-6 text-gray-900">
-                {{ isLogin ? 'Welcome back!' : 'Create your account' }}
+                {{ isLogin ? t('auth.welcomeBack') : t('auth.createAccount') }}
               </h3>
               <p class="mt-1 text-sm text-gray-500">
-                {{ isLogin ? "Don't have an account?" : 'Already have an account?' }}
+                {{ isLogin ? t('auth.noAccount') : t('auth.haveAccount') }}
                 <button
                   class="text-indigo-600 hover:text-indigo-500 font-medium"
                   @click="switchMode"
                 >
-                  {{ isLogin ? 'Sign up' : 'Sign in' }}
+                  {{ isLogin ? t('auth.signUp') : t('auth.signIn') }}
                 </button>
               </p>
             </div>
 
             <form @submit.prevent="handleSubmit" class="space-y-4">
               <div v-if="!isLogin" class="relative">
-                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                <label for="name" class="block text-sm font-medium text-gray-700">{{ t('auth.name') }}</label>
                 <div class="mt-1 relative rounded-md shadow-sm">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -54,15 +54,15 @@
                     minlength="2"
                     class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     :class="{ 'border-red-300': formErrors.name }"
-                    placeholder="John Doe"
+                    :placeholder="t('auth.namePlaceholder')"
                     @blur="validateField('name')"
                   />
                 </div>
-                <p v-if="formErrors.name" class="mt-1 text-xs text-red-600">{{ formErrors.name }}</p>
+                <p v-if="formErrors.name" class="mt-1 text-xs text-red-600">{{ t('auth.nameError') }}</p>
               </div>
 
               <div class="relative">
-                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <label for="email" class="block text-sm font-medium text-gray-700">{{ t('auth.email') }}</label>
                 <div class="mt-1 relative rounded-md shadow-sm">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -77,15 +77,15 @@
                     required
                     class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     :class="{ 'border-red-300': formErrors.email }"
-                    placeholder="you@example.com"
+                    :placeholder="t('auth.emailPlaceholder')"
                     @blur="validateField('email')"
                   />
                 </div>
-                <p v-if="formErrors.email" class="mt-1 text-xs text-red-600">{{ formErrors.email }}</p>
+                <p v-if="formErrors.email" class="mt-1 text-xs text-red-600">{{ t('auth.emailError') }}</p>
               </div>
 
               <div class="relative">
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <label for="password" class="block text-sm font-medium text-gray-700">{{ t('auth.password') }}</label>
                 <div class="mt-1 relative rounded-md shadow-sm">
                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -100,7 +100,7 @@
                     minlength="6"
                     class="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     :class="{ 'border-red-300': formErrors.password }"
-                    placeholder="••••••••"
+                    :placeholder="t('auth.passwordPlaceholder')"
                     @blur="validateField('password')"
                   />
                   <button
@@ -128,9 +128,9 @@
                     </svg>
                   </button>
                 </div>
-                <p v-if="formErrors.password" class="mt-1 text-xs text-red-600">{{ formErrors.password }}</p>
+                <p v-if="formErrors.password" class="mt-1 text-xs text-red-600">{{ t('auth.passwordError') }}</p>
                 <p v-if="!isLogin" class="mt-1 text-xs text-gray-500">
-                  Password must be at least 6 characters long
+                  {{ t('auth.passwordRequirement') }}
                 </p>
               </div>
 
@@ -173,7 +173,7 @@
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     />
                   </svg>
-                  {{ isLogin ? 'Sign in' : 'Create account' }}
+                  {{ isLogin ? t('auth.signIn') : t('auth.createAccount') }}
                 </button>
               </div>
             </form>
@@ -186,6 +186,9 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps({
   isOpen: {
@@ -227,18 +230,18 @@ const validateField = (field) => {
   switch (field) {
     case 'name':
       if (!isLogin.value && formData.value.name.length < 2) {
-        formErrors.value.name = 'Name must be at least 2 characters long';
+        formErrors.value.name = t('auth.nameError');
       }
       break;
     case 'email':
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.value.email)) {
-        formErrors.value.email = 'Please enter a valid email address';
+        formErrors.value.email = t('auth.emailError');
       }
       break;
     case 'password':
       if (formData.value.password.length < 6) {
-        formErrors.value.password = 'Password must be at least 6 characters long';
+        formErrors.value.password = t('auth.passwordError');
       }
       break;
   }
@@ -298,7 +301,7 @@ const handleSubmit = async () => {
     }
 
     if (!response.ok) {
-      throw new Error('Authentication failed');
+      throw new Error(t('auth.authFailed'));
     }
 
     // Store the token

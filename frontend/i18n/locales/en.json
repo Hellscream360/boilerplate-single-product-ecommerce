@@ -1,15 +1,15 @@
 {
   "product": {
-    "inStock": "In Stock",
-    "outOfStock": "Out of Stock",
-    "buyNow": "Buy Now →",
-    "learnMore": "Learn More",
+    "inStock": "In stock",
+    "outOfStock": "Out of stock",
+    "buyNow": "Buy now →",
+    "learnMore": "Learn more",
     "quantity": "Quantity",
     "total": "Total",
-    "discoverProduct": "Discover the Product"
+    "discoverProduct": "Discover product"
   },
   "features": {
-    "title": "Why Choose Us?",
+    "title": "Why choose us?",
     "subtitle": "Unique features for an exceptional experience",
     "performance": {
       "title": "Performance",
@@ -21,25 +21,30 @@
     },
     "simplicity": {
       "title": "Simplicity",
-      "description": "Intuitive usage for all users."
+      "description": "Intuitive use for all users."
     }
   },
   "cta": {
-    "title": "Ready to Start?",
-    "subtitle": "Join thousands of satisfied users today.",
-    "button": "Discover the Product"
+    "title": "Ready to start?",
+    "subtitle": "Join thousands of satisfied users.",
+    "button": "Discover product"
   },
   "footer": {
-    "copyright": "© {year} SingleProduct. All rights reserved."
+    "copyright": "© {year} SingleProduct. All rights reserved.",
+    "language": "Language"
   },
   "error": {
-    "loadProduct": "Failed to load product information. Please try again later."
+    "loadProduct": "Unable to load product information. Please try again later.",
+    "invalidEmail": "Please enter a valid email address",
+    "requiredField": "This field is required",
+    "invalidCredentials": "Invalid email or password"
   },
   "checkout": {
     "title": "Checkout",
     "close": "Close panel",
     "orderSummary": "Order Summary",
     "billing": {
+      "title": "Billing Information",
       "email": "Email",
       "emailPlaceholder": "Email",
       "firstName": "First name",
@@ -51,7 +56,7 @@
       "city": "City",
       "cityPlaceholder": "City",
       "postalCode": "Postal code",
-      "postalCodePlaceholder": "000000",
+      "postalCodePlaceholder": "12345",
       "country": "Country",
       "countrySelect": "Select a country",
       "countries": {
@@ -62,5 +67,40 @@
     },
     "submit": "Proceed to payment",
     "processing": "Processing..."
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "loggedInAs": "Logged in as",
+    "logout": "Log out",
+    "close": "Close",
+    "welcomeBack": "Welcome back!",
+    "createAccount": "Create your account",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "name": "Name",
+    "namePlaceholder": "John Doe",
+    "nameError": "Name must be at least 2 characters",
+    "email": "Email",
+    "emailPlaceholder": "your email",
+    "emailError": "Please enter a valid email address",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "passwordError": "Password must be at least 6 characters",
+    "passwordRequirement": "Password must be at least 6 characters",
+    "authFailed": "Authentication failed",
+    "forgotPassword": "Forgot password?",
+    "resetPassword": "Reset password",
+    "or": "or"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back"
   }
 } 

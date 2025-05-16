@@ -30,16 +30,21 @@
     "button": "Découvrir le produit"
   },
   "footer": {
-    "copyright": "© {year} SingleProduct. Tous droits réservés."
+    "copyright": "© {year} SingleProduct. Tous droits réservés.",
+    "language": "Langue"
   },
   "error": {
-    "loadProduct": "Impossible de charger les informations du produit. Veuillez réessayer plus tard."
+    "loadProduct": "Impossible de charger les informations du produit. Veuillez réessayer plus tard.",
+    "invalidEmail": "Veuillez entrer une adresse email valide",
+    "requiredField": "Ce champ est requis",
+    "invalidCredentials": "Email ou mot de passe incorrect"
   },
   "checkout": {
     "title": "Paiement",
     "close": "Fermer le panneau",
     "orderSummary": "Récapitulatif de la commande",
     "billing": {
+      "title": "Informations de facturation",
       "email": "Email",
       "emailPlaceholder": "Email",
       "firstName": "Prénom",
@@ -62,5 +67,40 @@
     },
     "submit": "Procéder au paiement",
     "processing": "Traitement en cours..."
+  },
+  "auth": {
+    "signIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "loggedInAs": "Connecté en tant que",
+    "logout": "Se déconnecter",
+    "close": "Fermer",
+    "welcomeBack": "Bon retour !",
+    "createAccount": "Créer votre compte",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "name": "Nom",
+    "namePlaceholder": "Michel Lemaitre",
+    "nameError": "Le nom doit contenir au moins 2 caractères",
+    "email": "Email",
+    "emailPlaceholder": "votre email",
+    "emailError": "Veuillez entrer une adresse email valide",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "••••••••",
+    "passwordError": "Le mot de passe doit contenir au moins 6 caractères",
+    "passwordRequirement": "Le mot de passe doit contenir au moins 6 caractères",
+    "authFailed": "L'authentification a échoué",
+    "forgotPassword": "Mot de passe oublié ?",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "or": "ou"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "back": "Retour"
   }
 } 
