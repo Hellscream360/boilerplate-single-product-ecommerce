@@ -23,12 +23,32 @@
               <p class="text-xl text-gray-600">
                 {{ productDescription }}
               </p>
+              <div class="flex items-center mb-4">
+                <div v-if="productAvailable" class="flex items-center text-green-600">
+                  <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span class="text-sm font-medium">In Stock</span>
+                </div>
+                <div v-else class="flex items-center text-red-600">
+                  <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  <span class="text-sm font-medium">Out of Stock</span>
+                </div>
+              </div>
               <div class="flex gap-4">
                 <a href="#discover" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
                   Learn More
                 </a>
-                <a href="/product" class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                  Buy Now →
+                <a 
+                  :href="productAvailable ? '/product' : '#'"
+                  class="inline-flex items-center px-6 py-3 border text-base font-medium rounded-md shadow-sm transition-colors"
+                  :class="productAvailable 
+                    ? 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50' 
+                    : 'border-gray-200 text-gray-400 bg-gray-50 cursor-not-allowed'"
+                >
+                  {{ productAvailable ? 'Buy Now →' : 'Out of Stock' }}
                 </a>
               </div>
             </div>
@@ -128,6 +148,7 @@ const product = computed(() => {
 
 const productTitle = computed(() => product.value?.title);
 const productDescription = computed(() => product.value?.description);
+const productAvailable = computed(() => product.value?.available);
 const productImage = computed(() => {
   const firstImage = product.value?.image?.[0];
   // On utilise le format medium pour une meilleure performance
