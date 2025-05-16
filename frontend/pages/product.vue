@@ -7,7 +7,7 @@
 
     <!-- Error state -->
     <div v-else-if="error" class="text-center py-12">
-      <p class="text-red-600">Failed to load product information. Please try again later.</p>
+      <p class="text-red-600">{{ $t('error.loadProduct') }}</p>
     </div>
 
     <!-- Product details -->
@@ -36,19 +36,19 @@
             <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
             </svg>
-            <span class="text-sm font-medium">In Stock</span>
+            <span class="text-sm font-medium">{{ $t('product.inStock') }}</span>
           </div>
           <div v-else class="flex items-center text-red-600">
             <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
-            <span class="text-sm font-medium">Out of Stock</span>
+            <span class="text-sm font-medium">{{ $t('product.outOfStock') }}</span>
           </div>
         </div>
 
         <!-- Quantity selector -->
         <div class="mt-8">
-          <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+          <label for="quantity" class="block text-sm font-medium text-gray-700">{{ $t('product.quantity') }}</label>
           <div class="mt-1.5 flex items-center gap-3">
             <button 
               type="button"
@@ -81,7 +81,7 @@
 
         <!-- Total price -->
         <div class="mt-4">
-          <p class="text-sm text-gray-600">Total: <span class="font-semibold text-gray-900">${{ (productPrice * quantity).toFixed(2) }}</span></p>
+          <p class="text-sm text-gray-600">{{ $t('product.total') }}: <span class="font-semibold text-gray-900">${{ (productPrice * quantity).toFixed(2) }}</span></p>
         </div>
 
         <div class="mt-8">
@@ -91,7 +91,7 @@
             @click="handleBuyNow"
             :disabled="!productAvailable"
           >
-            {{ productAvailable ? 'Buy Now' : 'Out of Stock' }}
+            {{ productAvailable ? $t('product.buyNow') : $t('product.outOfStock') }}
           </button>
         </div>
       </div>
@@ -110,9 +110,12 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
 const config = useRuntimeConfig();
+const { locale } = useI18n();
+const router = useRouter();
 const isCheckoutOpen = ref(false);
 const quantity = ref(1);
 
@@ -120,11 +123,32 @@ const { data: productData, error, pending } = await useFetch('/api/products', {
   baseURL: config.public.strapiUrl,
   params: {
     'populate': '*',
-    'pagination[pageSize]': 1
+    'pagination[pageSize]': 1,
+    'locale': locale.value
   },
   headers: {
     'Authorization': `Bearer ${config.public.strapiToken}`
   }
+});
+
+// Watch for locale changes and update the URL
+watch(locale, async (newLocale) => {
+  // Refetch product data with new locale
+  const { data } = await useFetch('/api/products', {
+    baseURL: config.public.strapiUrl,
+    params: {
+      'populate': '*',
+      'pagination[pageSize]': 1,
+      'locale': newLocale
+    },
+    headers: {
+      'Authorization': `Bearer ${config.public.strapiToken}`
+    },
+  });
+  
+  // Navigate to the localized URL
+  const path = newLocale === 'en' ? '/product' : '/fr/product';
+  router.push(path);
 });
 
 const product = computed(() => {

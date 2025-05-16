@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <!-- En-tête -->
+  <div class="min-h-screen bg-gray-50 flex flex-col">
+    <!-- Header -->
     <header class="bg-white shadow-sm">
       <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div class="flex items-center">
@@ -14,11 +14,18 @@
       </nav>
     </header>
 
-    <!-- Contenu principal -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Main content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <NuxtPage />
     </main>
+
+    <!-- Footer -->
+    <Footer />
   </div>
 </template>
+
+<script setup>
+import Footer from '~/components/Footer.vue';
+</script>
 
 

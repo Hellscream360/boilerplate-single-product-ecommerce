@@ -47,7 +47,7 @@
                 class="rounded-md text-gray-400 hover:text-gray-500 focus:outline-none" 
                 @click="$emit('close')"
               >
-                <span class="sr-only">Close panel</span>
+                <span class="sr-only">{{ t('checkout.close') }}</span>
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -59,13 +59,13 @@
               v-if="isMobile"
               class="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-gray-50"
             >
-              <h3 class="text-lg font-medium text-gray-900">Checkout</h3>
+              <h3 class="text-lg font-medium text-gray-900">{{ t('checkout.title') }}</h3>
               <button 
                 type="button"
                 class="text-gray-500 hover:text-gray-600"
                 @click="$emit('close')"
               >
-                <span class="sr-only">Close panel</span>
+                <span class="sr-only">{{ t('checkout.close') }}</span>
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                 </svg>
@@ -77,7 +77,7 @@
               <template v-if="currentStep === 'billing'">
                 <!-- Order summary -->
                 <div class="mb-6">
-                  <h3 class="text-lg font-semibold text-gray-900 mb-4" v-if="!isMobile">Order Summary</h3>
+                  <h3 class="text-lg font-semibold text-gray-900 mb-4" v-if="!isMobile">{{ t('checkout.orderSummary') }}</h3>
                   <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
                     <img 
                       :src="productImage" 
@@ -97,91 +97,91 @@
                 <!-- Billing information form -->
                 <form @submit.prevent="handleProceedToPayment" class="space-y-6">
                   <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <label for="email" class="block text-sm font-medium text-gray-700">{{ t('checkout.billing.email') }}</label>
                     <input 
                       type="email" 
                       id="email" 
                       v-model="formData.email"
                       class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
-                      placeholder="your@email.com"
+                      :placeholder="t('checkout.billing.emailPlaceholder')"
                       required
                     >
                   </div>
 
                   <div class="grid grid-cols-2 gap-4">
                     <div>
-                      <label for="firstName" class="block text-sm font-medium text-gray-700">First name</label>
+                      <label for="firstName" class="block text-sm font-medium text-gray-700">{{ t('checkout.billing.firstName') }}</label>
                       <input 
                         type="text" 
                         id="firstName" 
                         v-model="formData.firstName"
                         class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
-                        placeholder="John"
+                        :placeholder="t('checkout.billing.firstNamePlaceholder')"
                         required
                       >
                     </div>
                     <div>
-                      <label for="lastName" class="block text-sm font-medium text-gray-700">Last name</label>
+                      <label for="lastName" class="block text-sm font-medium text-gray-700">{{ t('checkout.billing.lastName') }}</label>
                       <input 
                         type="text" 
                         id="lastName" 
                         v-model="formData.lastName"
                         class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
-                        placeholder="Doe"
+                        :placeholder="t('checkout.billing.lastNamePlaceholder')"
                         required
                       >
                     </div>
                   </div>
 
                   <div>
-                    <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+                    <label for="address" class="block text-sm font-medium text-gray-700">{{ t('checkout.billing.address') }}</label>
                     <input 
                       type="text" 
                       id="address" 
                       v-model="formData.address"
                       class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
-                      placeholder="123 Street Name"
+                      :placeholder="t('checkout.billing.addressPlaceholder')"
                       required
                     >
                   </div>
 
                   <div class="grid grid-cols-2 gap-4">
                     <div>
-                      <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+                      <label for="city" class="block text-sm font-medium text-gray-700">{{ t('checkout.billing.city') }}</label>
                       <input 
                         type="text" 
                         id="city" 
                         v-model="formData.city"
                         class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
-                        placeholder="City"
+                        :placeholder="t('checkout.billing.cityPlaceholder')"
                         required
                       >
                     </div>
                     <div>
-                      <label for="postalCode" class="block text-sm font-medium text-gray-700">Postal code</label>
+                      <label for="postalCode" class="block text-sm font-medium text-gray-700">{{ t('checkout.billing.postalCode') }}</label>
                       <input 
                         type="text" 
                         id="postalCode" 
                         v-model="formData.postalCode"
                         class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
-                        placeholder="000000"
+                        :placeholder="t('checkout.billing.postalCodePlaceholder')"
                         required
                       >
                     </div>
                   </div>
 
                   <div>
-                    <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+                    <label for="country" class="block text-sm font-medium text-gray-700">{{ t('checkout.billing.country') }}</label>
                     <select 
                       id="country" 
                       v-model="formData.country"
                       class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
                       required
                     >
-                      <option value="">Select a country</option>
-                      <option value="FR">France</option>
-                      <option value="US">United States</option>
-                      <option value="GB">United Kingdom</option>
+                      <option value="">{{ t('checkout.billing.countrySelect') }}</option>
+                      <option value="FR">{{ t('checkout.billing.countries.FR') }}</option>
+                      <option value="US">{{ t('checkout.billing.countries.US') }}</option>
+                      <option value="GB">{{ t('checkout.billing.countries.GB') }}</option>
                     </select>
                   </div>
 
@@ -197,11 +197,9 @@
                           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
                           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                         </svg>
-                        Processing...
+                        {{ t('checkout.processing') }}
                       </span>
-                      <span v-else>
-                        Continue to Payment
-                      </span>
+                      <span v-else>{{ t('checkout.submit') }}</span>
                     </button>
                   </div>
                 </form>
@@ -309,8 +307,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch, computed } from 'vue';
+import { ref, onMounted, onUnmounted, watch, computed, reactive } from 'vue';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const props = defineProps({
   isOpen: {
     type: Boolean,
@@ -365,7 +365,7 @@ watch(() => props.isOpen, (newValue) => {
   }
 });
 
-const formData = ref({
+const formData = reactive({
   email: '',
   firstName: '',
   lastName: '',
@@ -430,7 +430,7 @@ const handlePaymentSuccess = async (paymentIntent) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: formData.value.email,
+        email: formData.email,
         orderDetails: {
           product: props.product,
           quantity: props.quantity,

@@ -1,0 +1,66 @@
+{
+  "product": {
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "buyNow": "Buy Now →",
+    "learnMore": "Learn More",
+    "quantity": "Quantity",
+    "total": "Total",
+    "discoverProduct": "Discover the Product"
+  },
+  "features": {
+    "title": "Why Choose Us?",
+    "subtitle": "Unique features for an exceptional experience",
+    "performance": {
+      "title": "Performance",
+      "description": "Fast and efficient results for your satisfaction."
+    },
+    "security": {
+      "title": "Security",
+      "description": "Optimal protection for your peace of mind."
+    },
+    "simplicity": {
+      "title": "Simplicity",
+      "description": "Intuitive usage for all users."
+    }
+  },
+  "cta": {
+    "title": "Ready to Start?",
+    "subtitle": "Join thousands of satisfied users today.",
+    "button": "Discover the Product"
+  },
+  "footer": {
+    "copyright": "© {year} SingleProduct. All rights reserved."
+  },
+  "error": {
+    "loadProduct": "Failed to load product information. Please try again later."
+  },
+  "checkout": {
+    "title": "Checkout",
+    "close": "Close panel",
+    "orderSummary": "Order Summary",
+    "billing": {
+      "email": "Email",
+      "emailPlaceholder": "Email",
+      "firstName": "First name",
+      "firstNamePlaceholder": "John",
+      "lastName": "Last name",
+      "lastNamePlaceholder": "Doe",
+      "address": "Address",
+      "addressPlaceholder": "123 Street Name",
+      "city": "City",
+      "cityPlaceholder": "City",
+      "postalCode": "Postal code",
+      "postalCodePlaceholder": "000000",
+      "country": "Country",
+      "countrySelect": "Select a country",
+      "countries": {
+        "FR": "France",
+        "US": "United States",
+        "GB": "United Kingdom"
+      }
+    },
+    "submit": "Proceed to payment",
+    "processing": "Processing..."
+  }
+} 

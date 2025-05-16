@@ -1,0 +1,66 @@
+{
+  "product": {
+    "inStock": "En stock",
+    "outOfStock": "Rupture de stock",
+    "buyNow": "Acheter maintenant →",
+    "learnMore": "En savoir plus",
+    "quantity": "Quantité",
+    "total": "Total",
+    "discoverProduct": "Découvrir le produit"
+  },
+  "features": {
+    "title": "Pourquoi nous choisir ?",
+    "subtitle": "Des fonctionnalités uniques pour une expérience exceptionnelle",
+    "performance": {
+      "title": "Performance",
+      "description": "Des résultats rapides et efficaces pour votre satisfaction."
+    },
+    "security": {
+      "title": "Sécurité",
+      "description": "Une protection optimale pour votre tranquillité d'esprit."
+    },
+    "simplicity": {
+      "title": "Simplicité",
+      "description": "Une utilisation intuitive pour tous les utilisateurs."
+    }
+  },
+  "cta": {
+    "title": "Prêt à commencer ?",
+    "subtitle": "Rejoignez des milliers d'utilisateurs satisfaits.",
+    "button": "Découvrir le produit"
+  },
+  "footer": {
+    "copyright": "© {year} SingleProduct. Tous droits réservés."
+  },
+  "error": {
+    "loadProduct": "Impossible de charger les informations du produit. Veuillez réessayer plus tard."
+  },
+  "checkout": {
+    "title": "Paiement",
+    "close": "Fermer le panneau",
+    "orderSummary": "Récapitulatif de la commande",
+    "billing": {
+      "email": "Email",
+      "emailPlaceholder": "Email",
+      "firstName": "Prénom",
+      "firstNamePlaceholder": "Michel",
+      "lastName": "Nom",
+      "lastNamePlaceholder": "Lemaitre",
+      "address": "Adresse",
+      "addressPlaceholder": "123 Nom de rue",
+      "city": "Ville",
+      "cityPlaceholder": "Ville",
+      "postalCode": "Code postal",
+      "postalCodePlaceholder": "75000",
+      "country": "Pays",
+      "countrySelect": "Sélectionnez un pays",
+      "countries": {
+        "FR": "France",
+        "US": "États-Unis",
+        "GB": "Royaume-Uni"
+      }
+    },
+    "submit": "Procéder au paiement",
+    "processing": "Traitement en cours..."
+  }
+} 
