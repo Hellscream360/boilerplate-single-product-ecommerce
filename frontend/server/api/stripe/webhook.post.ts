@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 import { defineEventHandler, readRawBody } from 'h3';
-import { useOrders } from '~/composables/useOrders';
+import { useOrderService } from '~/services/orderService';
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
@@ -24,34 +24,38 @@ export default defineEventHandler(async (event) => {
       config.stripe.webhookSecret
     );
 
+    const orderService = useOrderService();
+
     // Handle the event
     switch (stripeEvent.type) {
-      case 'checkout.session.completed': {
+      case 'checkout.session.completed':
+      case 'payment_intent.succeeded': {
         const session = stripeEvent.data.object;
         
         if (!session.metadata?.orderId) {
-          throw new Error('Missing orderId in session metadata');
+          console.error('Missing orderId in session metadata:', session);
+          break;
         }
         
         // Update order status in your database
-        const { updateOrder } = useOrders();
-        await updateOrder(Number(session.metadata.orderId), {
+        await orderService.updateOrder(Number(session.metadata.orderId), {
           status: 'completed',
           stripeSessionId: session.id,
         });
         
         break;
       }
-      case 'checkout.session.expired': {
+      case 'checkout.session.expired':
+      case 'payment_intent.payment_failed': {
         const session = stripeEvent.data.object;
         
         if (!session.metadata?.orderId) {
-          throw new Error('Missing orderId in session metadata');
+          console.error('Missing orderId in session metadata:', session);
+          break;
         }
         
         // Update order status in your database
-        const { updateOrder } = useOrders();
-        await updateOrder(Number(session.metadata.orderId), {
+        await orderService.updateOrder(Number(session.metadata.orderId), {
           status: 'cancelled',
           stripeSessionId: session.id,
         });

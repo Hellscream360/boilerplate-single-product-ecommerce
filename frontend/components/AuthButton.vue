@@ -38,19 +38,6 @@
           <p class="text-sm font-medium text-gray-900 truncate">{{ user.email }}</p>
         </div>
         
-        <!-- Lien Espace Admin -->
-        <NuxtLink
-          v-if="isAdmin"
-          to="/admin"
-          class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors duration-200"
-          @click="isMenuOpen = false"
-        >
-          {{ $t('footer.admin') }}
-        </NuxtLink>
-
-        <!-- Séparateur si admin -->
-        <div v-if="isAdmin" class="border-t border-gray-50 my-1"></div>
-
         <a
           href="#"
           class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors duration-200"
@@ -70,13 +57,12 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useAuthStore } from '~/stores/auth';
 
 const authStore = useAuthStore();
 const user = ref(null);
 const isMenuOpen = ref(false);
-const isAdmin = computed(() => user.value?.isAdmin);
 const menuRef = ref(null);
 const buttonRef = ref(null);
 
@@ -86,7 +72,7 @@ onMounted(async () => {
     
     if (token) {
       // Fetch user from Strapi
-      const response = await fetch(`${useRuntimeConfig().public.strapiUrl}/api/users/me?populate=role`, {
+      const response = await fetch(`${useRuntimeConfig().public.strapiUrl}/api/users/me`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -94,7 +80,6 @@ onMounted(async () => {
       
       if (response.ok) {
         user.value = await response.json();
-        console.log('User data:', user.value.isAdmin); // For debugging
       }
     }
 
