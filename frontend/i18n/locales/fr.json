@@ -30,8 +30,9 @@
     "button": "Découvrir le produit"
   },
   "footer": {
-    "copyright": "© {year} SingleProduct. Tous droits réservés.",
-    "language": "Langue"
+    "copyright": "© {year} Votre Boutique. Tous droits réservés.",
+    "language": "Langue",
+    "admin": "Espace Admin"
   },
   "error": {
     "loadProduct": "Impossible de charger les informations du produit. Veuillez réessayer plus tard.",
@@ -102,5 +103,65 @@
     "delete": "Supprimer",
     "edit": "Modifier",
     "back": "Retour"
+  },
+  "admin": {
+    "orders": {
+      "title": "Gestion des Commandes",
+      "newOrder": "Nouvelle Commande",
+      "id": "ID",
+      "date": "Date",
+      "customer": "Client",
+      "total": "Total",
+      "status": "Statut",
+      "actions": "Actions",
+      "view": "Voir",
+      "edit": "Modifier",
+      "loading": "Chargement...",
+      "notFound": "Commande non trouvée",
+      "statuses": {
+        "all": "Tous les statuts",
+        "pending": "En attente",
+        "processing": "En traitement",
+        "completed": "Terminée",
+        "cancelled": "Annulée"
+      }
+    },
+    "orderDetails": {
+      "title": "Commande #",
+      "created": "Créée le",
+      "customerInfo": "Informations Client",
+      "shippingAddress": "Adresse de Livraison",
+      "paymentDetails": "Détails de Paiement",
+      "fullName": "Nom complet",
+      "email": "Email",
+      "address": "Adresse",
+      "city": "Ville",
+      "postalCode": "Code postal",
+      "country": "Pays",
+      "stripeId": "ID Session Stripe"
+    },
+    "dashboard": {
+      "title": "Tableau de Bord Administrateur",
+      "orders": {
+        "title": "Commandes",
+        "description": "Gérez les commandes, suivez leur statut et mettez à jour les informations client."
+      },
+      "products": {
+        "title": "Produits",
+        "description": "Gérez votre catalogue de produits (bientôt disponible)."
+      },
+      "customers": {
+        "title": "Clients",
+        "description": "Gérez vos clients et leurs informations (bientôt disponible)."
+      },
+      "statistics": {
+        "title": "Statistiques",
+        "description": "Consultez les statistiques de ventes (bientôt disponible)."
+      },
+      "settings": {
+        "title": "Paramètres",
+        "description": "Configurez les paramètres de votre boutique (bientôt disponible)."
+      }
+    }
   }
 } 

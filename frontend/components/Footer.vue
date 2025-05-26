@@ -6,6 +6,7 @@
           {{ t('footer.copyright', { year: new Date().getFullYear() }) }}
         </div>
         <div class="flex items-center space-x-4">
+          <!-- Language selector -->
           <div class="relative inline-block text-left">
             <select
               v-model="selectedLocale"

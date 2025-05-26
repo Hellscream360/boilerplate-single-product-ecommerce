@@ -143,9 +143,9 @@ const { data: productData, error, pending } = await useFetch('/api/products', {
     'pagination[pageSize]': 1,
     'locale': locale.value
   },
-  headers: {
+  headers: config.public.strapiToken ? {
     'Authorization': `Bearer ${config.public.strapiToken}`
-  },
+  } : undefined
 });
 
 // Watch for locale changes and update the URL
@@ -158,9 +158,9 @@ watch(locale, async (newLocale) => {
       'pagination[pageSize]': 1,
       'locale': newLocale
     },
-    headers: {
+    headers: config.public.strapiToken ? {
       'Authorization': `Bearer ${config.public.strapiToken}`
-    },
+    } : undefined
   });
 
   const path = newLocale === 'en' ? '/product' : '/fr/product';

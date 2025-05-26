@@ -99,19 +99,36 @@
 
     <!-- Checkout Panel -->
     <CheckoutPanel
-      v-if="product"
+      v-if="checkoutProduct"
       :is-open="isCheckoutOpen"
-      :product="product"
+      :product="checkoutProduct"
       :quantity="quantity"
       @close="isCheckoutOpen = false"
-      @proceed-to-payment="handleProceedToPayment"
+      @order-created="handleOrderCreated"
     />
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+interface Product {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  available: boolean;
+  image: Array<{
+    url: string;
+    formats?: {
+      large?: {
+        url: string;
+      };
+    };
+  }>;
+}
 
 const config = useRuntimeConfig();
 const { locale } = useI18n();
@@ -119,7 +136,7 @@ const router = useRouter();
 const isCheckoutOpen = ref(false);
 const quantity = ref(1);
 
-const { data: productData, error, pending } = await useFetch('/api/products', {
+const { data: productData, error, pending } = await useFetch<{ data: Product[] }>('/api/products', {
   baseURL: config.public.strapiUrl,
   params: {
     'populate': '*',
@@ -160,30 +177,51 @@ const product = computed(() => {
 
 const productTitle = computed(() => product.value?.title);
 const productDescription = computed(() => product.value?.description);
-const productPrice = computed(() => product.value?.price);
+const productPrice = computed(() => product.value?.price ?? 0);
 const productAvailable = computed(() => product.value?.available);
 const productImage = computed(() => {
   const firstImage = product.value?.image?.[0];
   // Using large format for product page
   const imageUrl = firstImage?.formats?.large?.url || firstImage?.url;
   
-  if (imageUrl?.startsWith('/')) {
-    return `${config.public.strapiUrl}${imageUrl}`;
+  if (!imageUrl) return null;
+  
+  // If the image URL is already absolute, return it as is
+  if (imageUrl.startsWith('http')) {
+    return imageUrl;
   }
   
-  return imageUrl;
+  // Make sure we have a fully qualified URL for Stripe
+  const baseUrl = process.env.NODE_ENV === 'production' 
+    ? config.public.strapiUrl 
+    : 'http://localhost:1337';
+  
+  return new URL(imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`, baseUrl).toString();
+});
+
+// Prepare product data for checkout
+const checkoutProduct = computed(() => {
+  if (!product.value) return null;
+
+  const imageUrl = productImage.value;
+  if (!imageUrl) return null;
+
+  return {
+    id: product.value.id,
+    title: product.value.title,
+    price: product.value.price,
+    image: imageUrl,
+  };
 });
 
 const handleBuyNow = () => {
-  isCheckoutOpen.value = true;
+  if (productAvailable.value) {
+    isCheckoutOpen.value = true;
+  }
 };
 
-const handleProceedToPayment = async (data) => {
-  console.log('Proceeding to payment with:', {
-    ...data,
-    quantity: quantity.value,
-    totalPrice: (productPrice.value * quantity.value).toFixed(2)
-  });
-  // TODO: Implement Stripe checkout
+const handleOrderCreated = (orderId: number) => {
+  console.log('Order created:', orderId);
+  // You might want to redirect to a success page or show a success message
 };
 </script> 

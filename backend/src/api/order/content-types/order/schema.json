@@ -4,32 +4,51 @@
   "info": {
     "singularName": "order",
     "pluralName": "orders",
-    "displayName": "Order"
+    "displayName": "Order",
+    "description": "Customer orders"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "attributes": {
-    "customer_email": {
-      "type": "string",
-      "required": true
+    "total": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
     },
-    "product": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::product.product"
-    },
-    "order_status": {
+    "status": {
       "type": "enumeration",
       "enum": [
         "pending",
-        "paid",
+        "processing",
+        "completed",
         "cancelled"
       ],
+      "default": "pending",
       "required": true
     },
-    "stripe_session_id": {
-      "type": "string"
+    "stripeSessionId": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "customerEmail": {
+      "type": "email",
+      "required": true
+    },
+    "customerName": {
+      "type": "string",
+      "required": true
+    },
+    "shippingAddress": {
+      "type": "json",
+      "required": true
+    },
+    "createdAt": {
+      "type": "datetime"
+    },
+    "updatedAt": {
+      "type": "datetime"
     }
   }
 }

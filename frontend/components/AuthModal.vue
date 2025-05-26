@@ -304,9 +304,11 @@ const handleSubmit = async () => {
       throw new Error(t('auth.authFailed'));
     }
 
-    // Store the token
-    localStorage.setItem('token', data.jwt);
-    localStorage.setItem('user', JSON.stringify(data.user));
+    // Store the token only on client side
+    if (process.client) {
+      localStorage.setItem('token', data.jwt);
+      localStorage.setItem('user', JSON.stringify(data.user));
+    }
 
     emit('success', data);
     emit('close');

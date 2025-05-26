@@ -4,7 +4,7 @@
     <header class="bg-white shadow-sm">
       <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div class="flex items-center">
-          <NuxtLink :to="localePath('/')" class="text-xl font-bold text-gray-900">
+          <NuxtLink :to="localePath('/')" class="text-xl font-bold text-gray-900 cursor-pointer">
             SingleProduct
           </NuxtLink>
         </div>

@@ -30,8 +30,9 @@
     "button": "Discover product"
   },
   "footer": {
-    "copyright": "© {year} SingleProduct. All rights reserved.",
-    "language": "Language"
+    "copyright": "© {year} Your Shop. All rights reserved.",
+    "language": "Language",
+    "admin": "Admin Area"
   },
   "error": {
     "loadProduct": "Unable to load product information. Please try again later.",
@@ -66,7 +67,17 @@
       }
     },
     "submit": "Proceed to payment",
-    "processing": "Processing..."
+    "processing": "Processing...",
+    "success": {
+      "title": "Order Confirmed!",
+      "message": "Thank you for your purchase. You will receive a confirmation email shortly.",
+      "backToHome": "Back to Home"
+    },
+    "cancel": {
+      "title": "Order Cancelled",
+      "message": "Your order has been cancelled. No payment has been processed.",
+      "backToHome": "Back to Home"
+    }
   },
   "auth": {
     "signIn": "Sign in",
@@ -102,5 +113,65 @@
     "delete": "Delete",
     "edit": "Edit",
     "back": "Back"
+  },
+  "admin": {
+    "orders": {
+      "title": "Order Management",
+      "newOrder": "New Order",
+      "id": "ID",
+      "date": "Date",
+      "customer": "Customer",
+      "total": "Total",
+      "status": "Status",
+      "actions": "Actions",
+      "view": "View",
+      "edit": "Edit",
+      "loading": "Loading...",
+      "notFound": "Order not found",
+      "statuses": {
+        "all": "All statuses",
+        "pending": "Pending",
+        "processing": "Processing",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      }
+    },
+    "orderDetails": {
+      "title": "Order #",
+      "created": "Created on",
+      "customerInfo": "Customer Information",
+      "shippingAddress": "Shipping Address",
+      "paymentDetails": "Payment Details",
+      "fullName": "Full name",
+      "email": "Email",
+      "address": "Address",
+      "city": "City",
+      "postalCode": "Postal code",
+      "country": "Country",
+      "stripeId": "Stripe Session ID"
+    },
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "orders": {
+        "title": "Orders",
+        "description": "Manage orders, track their status and update customer information."
+      },
+      "products": {
+        "title": "Products",
+        "description": "Manage your product catalog (coming soon)."
+      },
+      "customers": {
+        "title": "Customers",
+        "description": "Manage your customers and their information (coming soon)."
+      },
+      "statistics": {
+        "title": "Statistics",
+        "description": "View sales statistics (coming soon)."
+      },
+      "settings": {
+        "title": "Settings",
+        "description": "Configure your store settings (coming soon)."
+      }
+    }
   }
 } 

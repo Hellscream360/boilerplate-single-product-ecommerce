@@ -113,11 +113,31 @@ module.exports = {
         }
       });
 
+      // Create example order
+      await strapi.entityService.create('api::order.order', {
+        data: {
+          total: 199.99,
+          status: 'completed',
+          stripeSessionId: 'cs_test_example123',
+          customerEmail: 'john.doe@example.com',
+          customerName: 'John Doe',
+          shippingAddress: {
+            firstName: 'John',
+            lastName: 'Doe',
+            address: '123 Main Street',
+            city: 'New York',
+            postalCode: '10001',
+            country: 'US'
+          }
+        }
+      });
+
       console.log('✅ Seed completed successfully!');
       console.log('Created:');
       console.log('- 1 Customer');
       console.log('- 1 Order');
       console.log('- 1 Product (with EN and FR translations)');
+      console.log('- Example order');
 
     } catch (error) {
       console.error('🚫 Error during seed:', error);
