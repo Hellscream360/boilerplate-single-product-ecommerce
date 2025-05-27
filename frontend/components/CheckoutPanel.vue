@@ -213,7 +213,6 @@ onMounted(async () => {
   updateIsMobile();
   window.addEventListener('resize', updateIsMobile);
   
-  // Récupérer l'utilisateur connecté
   const currentUser = await $strapi.getUser();
   if (currentUser?.email) {
     formData.email = currentUser.email;

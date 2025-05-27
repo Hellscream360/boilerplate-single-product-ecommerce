@@ -20,6 +20,29 @@ export default defineEventHandler(async (event) => {
       metadata 
     } = body;
 
+    let stripeProduct;
+    const products = await stripe.products.list({
+      limit: 1,
+    });
+
+    stripeProduct = products.data.find(p => p.name === productName);
+
+    if (!stripeProduct) {
+      stripeProduct = await stripe.products.create({
+        name: productName,
+        images: productImage ? [productImage] : [],
+        metadata: {
+          productId: metadata.orderId,
+        },
+      });
+    }
+
+    const stripePrice = await stripe.prices.create({
+      product: stripeProduct.id,
+      unit_amount: Math.round(price * 100), // Convert to cents
+      currency: 'eur',
+    });
+
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -33,16 +56,10 @@ export default defineEventHandler(async (event) => {
       phone_number_collection: {
         enabled: true,
       },
+      allow_promotion_codes: true,
       line_items: [
         {
-          price_data: {
-            currency: 'eur',
-            product_data: {
-              name: productName,
-              images: productImage ? [productImage] : [],
-            },
-            unit_amount: Math.round(price * 100), // Convert to cents
-          },
+          price: stripePrice.id,
           quantity: quantity,
         },
       ],
@@ -51,7 +68,9 @@ export default defineEventHandler(async (event) => {
       metadata: {
         ...metadata,
         customerName,
-        shippingAddress: JSON.stringify(shippingAddress)
+        shippingAddress: JSON.stringify(shippingAddress),
+        productName,
+        productId: stripeProduct.id,
       },
     });
 
