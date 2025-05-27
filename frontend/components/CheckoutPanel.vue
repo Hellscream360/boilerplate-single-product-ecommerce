@@ -218,9 +218,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, computed, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useOrders } from '~/composables/useOrders';
-import { loadStripe } from '@stripe/stripe-js';
-import type { Stripe } from '@stripe/stripe-js';
 
 interface PaymentIntent {
   id: string;
@@ -241,7 +238,6 @@ const props = defineProps<{
 }>();
 
 const config = useRuntimeConfig();
-const { createOrder } = useOrders();
 const emit = defineEmits<{
   (e: 'close'): void;
 }>();
@@ -307,21 +303,35 @@ const handleProceedToPayment = async () => {
   
   try {
     // Create order in Strapi first
-    const order = await createOrder({
-      customerName: `${formData.firstName} ${formData.lastName}`,
-      customerEmail: formData.email,
-      total: props.product.price * props.quantity,
-      shippingAddress: {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        address: formData.address,
-        city: formData.city,
-        postalCode: formData.postalCode,
-        country: formData.country,
+    const orderResponse = await fetch(`${config.public.strapiUrl}/api/orders`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      stripeSessionId: '', // Will be updated after Stripe session creation
-      status: 'pending'
+      body: JSON.stringify({
+        data: {
+          customerName: `${formData.firstName} ${formData.lastName}`,
+          customerEmail: formData.email,
+          total: props.product.price * props.quantity,
+          shippingAddress: {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            address: formData.address,
+            city: formData.city,
+            postalCode: formData.postalCode,
+            country: formData.country,
+          },
+          stripeSessionId: '',
+          status: 'pending'
+        }
+      }),
     });
+
+    if (!orderResponse.ok) {
+      throw new Error('Failed to create order');
+    }
+
+    const order = await orderResponse.json();
 
     // Create Stripe Checkout Session
     const response = await fetch('/api/create-payment-intent', {
@@ -336,7 +346,7 @@ const handleProceedToPayment = async () => {
         productImage: productImage.value,
         customerEmail: formData.email,
         metadata: {
-          orderId: order.id
+          orderId: order.data.id
         }
       }),
     });

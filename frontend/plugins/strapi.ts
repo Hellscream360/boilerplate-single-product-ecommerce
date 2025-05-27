@@ -15,17 +15,20 @@ export default defineNuxtPlugin((nuxtApp) => {
   // Function to fetch user data from the API
   const fetchUser = async (token: string): Promise<StrapiUser | null> => {
     try {
-      const response = await fetch(`${config.public.strapiUrl}/api/users/me?populate=role`, {
+      const response = await fetch(`${config.public.strapiUrl}/api/users/me?populate=*`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       
       if (!response.ok) {
+        console.error('Failed to fetch user:', await response.json());
         throw new Error('Failed to fetch user');
       }
 
-      return await response.json();
+      const userData = await response.json();
+      console.log('User data:', userData);
+      return userData;
     } catch (error) {
       console.error('Error fetching user:', error);
       return null;
