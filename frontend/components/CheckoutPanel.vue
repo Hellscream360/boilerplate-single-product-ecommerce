@@ -107,83 +107,6 @@
                   >
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label for="firstName" class="block text-sm font-medium text-gray-700">{{ t('checkout.billing.firstName') }}</label>
-                    <input 
-                      type="text" 
-                      id="firstName" 
-                      v-model="formData.firstName"
-                      class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
-                      :placeholder="t('checkout.billing.firstNamePlaceholder')"
-                      required
-                    >
-                  </div>
-                  <div>
-                    <label for="lastName" class="block text-sm font-medium text-gray-700">{{ t('checkout.billing.lastName') }}</label>
-                    <input 
-                      type="text" 
-                      id="lastName" 
-                      v-model="formData.lastName"
-                      class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
-                      :placeholder="t('checkout.billing.lastNamePlaceholder')"
-                      required
-                    >
-                  </div>
-                </div>
-
-                <div>
-                  <label for="address" class="block text-sm font-medium text-gray-700">{{ t('checkout.billing.address') }}</label>
-                  <input 
-                    type="text" 
-                    id="address" 
-                    v-model="formData.address"
-                    class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
-                    :placeholder="t('checkout.billing.addressPlaceholder')"
-                    required
-                  >
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label for="city" class="block text-sm font-medium text-gray-700">{{ t('checkout.billing.city') }}</label>
-                    <input 
-                      type="text" 
-                      id="city" 
-                      v-model="formData.city"
-                      class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
-                      :placeholder="t('checkout.billing.cityPlaceholder')"
-                      required
-                    >
-                  </div>
-                  <div>
-                    <label for="postalCode" class="block text-sm font-medium text-gray-700">{{ t('checkout.billing.postalCode') }}</label>
-                    <input 
-                      type="text" 
-                      id="postalCode" 
-                      v-model="formData.postalCode"
-                      class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
-                      :placeholder="t('checkout.billing.postalCodePlaceholder')"
-                      required
-                    >
-                  </div>
-                </div>
-
-                <div>
-                  <label for="country" class="block text-sm font-medium text-gray-700">{{ t('checkout.billing.country') }}</label>
-                  <select 
-                    id="country" 
-                    v-model="formData.country"
-                    class="mt-1.5 block w-full rounded-lg border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm transition duration-150 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:ring-offset-0"
-                    required
-                  >
-                    <option value="">{{ t('checkout.billing.countrySelect') }}</option>
-                    <option value="FR">{{ t('checkout.billing.countries.FR') }}</option>
-                    <option value="US">{{ t('checkout.billing.countries.US') }}</option>
-                    <option value="GB">{{ t('checkout.billing.countries.GB') }}</option>
-                  </select>
-                </div>
-
                 <!-- Error message -->
                 <div v-if="error" class="mt-4 p-4 bg-red-50 rounded-lg">
                   <p class="text-sm text-red-600">{{ error }}</p>
@@ -218,6 +141,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, computed, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useNuxtApp } from '#app';
 
 interface PaymentIntent {
   id: string;
@@ -242,6 +166,9 @@ const emit = defineEmits<{
   (e: 'close'): void;
 }>();
 
+const { $strapi } = useNuxtApp();
+const user = ref($strapi.user);
+
 const isLoading = ref(false);
 const isMobile = ref(window?.innerWidth < 640);
 const error = ref('');
@@ -259,13 +186,7 @@ watch(() => props.isOpen, (newValue) => {
 });
 
 const formData = reactive({
-  email: '',
-  firstName: '',
-  lastName: '',
-  address: '',
-  city: '',
-  postalCode: '',
-  country: ''
+  email: ''
 });
 
 const productImage = computed(() => {
@@ -288,9 +209,15 @@ const updateIsMobile = () => {
   isMobile.value = window.innerWidth < 768; // md breakpoint
 };
 
-onMounted(() => {
+onMounted(async () => {
   updateIsMobile();
   window.addEventListener('resize', updateIsMobile);
+  
+  // Récupérer l'utilisateur connecté
+  const currentUser = await $strapi.getUser();
+  if (currentUser?.email) {
+    formData.email = currentUser.email;
+  }
 });
 
 onUnmounted(() => {
@@ -310,16 +237,16 @@ const handleProceedToPayment = async () => {
       },
       body: JSON.stringify({
         data: {
-          customerName: `${formData.firstName} ${formData.lastName}`,
+          customerName: '',
           customerEmail: formData.email,
           total: props.product.price * props.quantity,
           shippingAddress: {
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            address: formData.address,
-            city: formData.city,
-            postalCode: formData.postalCode,
-            country: formData.country,
+            firstName: '',
+            lastName: '',
+            address: '',
+            city: '',
+            postalCode: '',
+            country: '',
           },
           stripeSessionId: '',
           status: 'pending'
@@ -345,6 +272,13 @@ const handleProceedToPayment = async () => {
         productName: props.product.title,
         productImage: productImage.value,
         customerEmail: formData.email,
+        customerName: '',
+        shippingAddress: {
+          address: '',
+          city: '',
+          postalCode: '',
+          country: '',
+        },
         metadata: {
           orderId: order.data.id
         }
