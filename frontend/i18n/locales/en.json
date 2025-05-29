@@ -1,135 +1,84 @@
 {
-  "product": {
-    "title": "Product",
-    "description": "Description",
-    "features": "Features",
-    "addToCart": "Add to Cart",
-    "buyNow": "Buy Now",
-    "outOfStock": "Out of Stock",
-    "inStock": "In Stock",
-    "quantity": "Quantity",
-    "decrease": "Decrease quantity",
-    "increase": "Increase quantity",
-    "learnMore": "Learn more",
-    "total": "Total",
-    "discoverProduct": "Discover the product",
-    "variants": "Available variants"
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "The Art of Precision",
+    "subtitle": "An exceptional timepiece, combining horological tradition with contemporary innovation",
+    "cta": "Discover"
   },
   "features": {
-    "title": "Why choose us?",
-    "subtitle": "Unique features for an exceptional experience",
-    "performance": {
-      "title": "Performance",
-      "description": "Fast and efficient results for your satisfaction."
+    "precision": {
+      "title": "Supreme Precision",
+      "description": "High-precision mechanical movement, ensuring exceptional accuracy"
     },
-    "security": {
-      "title": "Security",
-      "description": "Optimal protection for your peace of mind."
+    "craftsmanship": {
+      "title": "Artisanal Craftsmanship",
+      "description": "Every detail meticulously crafted by master watchmakers"
     },
-    "simplicity": {
-      "title": "Simplicity",
-      "description": "Intuitive use for all users."
+    "heritage": {
+      "title": "Prestigious Heritage",
+      "description": "A tradition of excellence passed down through generations"
     }
   },
-  "cta": {
-    "title": "Ready to start?",
-    "subtitle": "Join thousands of satisfied users.",
-    "button": "Discover the product"
+  "preview": {
+    "title": "Excellence on Your Wrist",
+    "description": "A watch that embodies timeless elegance and technical performance",
+    "features": {
+      "1": "Swiss automatic movement",
+      "2": "316L stainless steel case",
+      "3": "Anti-reflective sapphire crystal"
+    },
+    "cta": "View Details"
   },
   "footer": {
-    "copyright": "© {year} Your Store. All rights reserved.",
+    "description": "Horological excellence at its peak",
+    "quickLinks": "Quick Links",
+    "contact": "Contact",
+    "email": "contactATluxe.com",
+    "phone": "+1 (555) 123-4567",
+    "rights": "All rights reserved",
     "language": "Language"
   },
-  "error": {
-    "loadProduct": "Unable to load product information. Please try again later.",
-    "invalidEmail": "Please enter a valid email address",
-    "requiredField": "This field is required",
-    "invalidCredentials": "Invalid email or password"
+  "about": {
+    "title": "About Us",
+    "description": "We are dedicated to creating exceptional timepieces that combine traditional craftsmanship with modern innovation. Our watches are more than just timekeeping devices; they are expressions of art and engineering excellence."
   },
-  "checkout": {
-    "title": "Checkout",
-    "close": "Close panel",
-    "billing": {
-      "title": "Billing Information",
-      "email": "Email",
-      "emailPlaceholder": "Email",
-      "firstName": "First name",
-      "firstNamePlaceholder": "John",
-      "lastName": "Last name",
-      "lastNamePlaceholder": "Doe",
-      "address": "Address",
-      "addressPlaceholder": "123 Street Name",
-      "city": "City",
-      "cityPlaceholder": "City",
-      "postalCode": "Postal code",
-      "postalCodePlaceholder": "12345",
-      "country": "Country",
-      "countrySelect": "Select a country",
-      "countries": {
-        "FR": "France",
-        "US": "United States",
-        "GB": "United Kingdom"
-      }
-    },
-    "submit": "Proceed to payment",
-    "processing": "Processing...",
-    "success": {
-      "title": "Order Confirmed!",
-      "message": "Thank you for your purchase. You will receive a confirmation email shortly.",
-      "backToHome": "Back to Home"
-    },
-    "cancel": {
-      "title": "Order Cancelled",
-      "message": "Your order has been cancelled. No payment has been made.",
-      "backToHome": "Back to Home"
-    }
-  },
-  "auth": {
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "loggedInAs": "Logged in as",
-    "logout": "Log out",
-    "close": "Close",
-    "welcomeBack": "Welcome back!",
-    "createAccount": "Create your account",
-    "noAccount": "Don't have an account?",
-    "haveAccount": "Already have an account?",
-    "name": "Name",
-    "namePlaceholder": "John Doe",
-    "nameError": "Name must be at least 2 characters long",
-    "email": "Email",
-    "emailPlaceholder": "your email",
-    "emailError": "Please enter a valid email address",
-    "password": "Password",
-    "passwordPlaceholder": "••••••••",
-    "passwordError": "Password must be at least 6 characters long",
-    "passwordRequirement": "Password must be at least 6 characters long",
-    "authFailed": "Authentication failed",
-    "forgotPassword": "Forgot password?",
-    "resetPassword": "Reset password",
-    "or": "or"
-  },
-  "common": {
-    "loading": "Loading...",
-    "error": "Error",
-    "success": "Success",
-    "cancel": "Cancel",
-    "save": "Save",
-    "delete": "Delete",
-    "edit": "Edit",
-    "back": "Back"
+  "contact": {
+    "title": "Contact Us",
+    "description": "We'd love to hear from you. Whether you have a question about our products, need assistance with your purchase, or want to learn more about our craftsmanship, our team is here to help."
   },
   "cart": {
-    "title": "Shopping Cart",
-    "close": "Close cart",
+    "title": "Your Cart",
+    "close": "Close",
+    "empty": "Your cart is empty",
     "decrease": "Decrease quantity",
     "increase": "Increase quantity",
     "remove": "Remove",
     "subtotal": "Subtotal",
-    "shipping": "Shipping and taxes calculated at checkout",
-    "checkout": "Checkout",
+    "shipping": "Shipping included",
     "or": "or",
-    "continue": "Continue Shopping",
-    "empty": "Your cart is empty"
+    "continue": "Continue shopping"
+  },
+  "checkout": {
+    "processing": "Processing...",
+    "submit": "Proceed to payment"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "loggedInAs": "Logged in as",
+    "logout": "Logout"
+  },
+  "product": {
+    "variants": "Variants",
+    "inStock": "In stock",
+    "outOfStock": "Out of stock",
+    "learnMore": "Learn more",
+    "buyNow": "Buy now"
+  },
+  "error": {
+    "loadProduct": "An error occurred while loading the product"
   }
 } 

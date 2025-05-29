@@ -1,135 +1,84 @@
 {
-  "product": {
-    "title": "Produit",
-    "description": "Description",
-    "features": "Caractéristiques",
-    "addToCart": "Ajouter au panier",
-    "buyNow": "Acheter maintenant",
-    "outOfStock": "Rupture de stock",
-    "inStock": "En stock",
-    "quantity": "Quantité",
-    "decrease": "Diminuer la quantité",
-    "increase": "Augmenter la quantité",
-    "learnMore": "En savoir plus",
-    "total": "Total",
-    "discoverProduct": "Découvrir le produit",
-    "variants": "Modèles disponibles"
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "L'Art de la Précision",
+    "subtitle": "Une montre d'exception, alliant tradition horlogère et innovation contemporaine",
+    "cta": "Découvrir"
   },
   "features": {
-    "title": "Pourquoi nous choisir ?",
-    "subtitle": "Des fonctionnalités uniques pour une expérience exceptionnelle",
-    "performance": {
-      "title": "Performance",
-      "description": "Des résultats rapides et efficaces pour votre satisfaction."
+    "precision": {
+      "title": "Précision Suprême",
+      "description": "Mouvement mécanique de haute précision, garantissant une exactitude exceptionnelle"
     },
-    "security": {
-      "title": "Sécurité",
-      "description": "Une protection optimale pour votre tranquillité d'esprit."
+    "craftsmanship": {
+      "title": "Savoir-faire Artisanal",
+      "description": "Chaque détail est minutieusement façonné par des maîtres horlogers"
     },
-    "simplicity": {
-      "title": "Simplicité",
-      "description": "Une utilisation intuitive pour tous les utilisateurs."
+    "heritage": {
+      "title": "Héritage Prestigieux",
+      "description": "Une tradition d'excellence transmise de génération en génération"
     }
   },
-  "cta": {
-    "title": "Prêt à commencer ?",
-    "subtitle": "Rejoignez des milliers d'utilisateurs satisfaits.",
-    "button": "Découvrir le produit"
+  "preview": {
+    "title": "L'Excellence à Votre Poignet",
+    "description": "Une montre qui incarne l'élégance intemporelle et la performance technique",
+    "features": {
+      "1": "Mouvement automatique suisse",
+      "2": "Boîtier en acier inoxydable 316L",
+      "3": "Verre saphir anti-reflet"
+    },
+    "cta": "Voir les détails"
   },
   "footer": {
-    "copyright": "© {year} Votre Boutique. Tous droits réservés.",
+    "description": "L'excellence horlogère à son apogée",
+    "quickLinks": "Liens Rapides",
+    "contact": "Contact",
+    "email": "contact@luxe.com",
+    "phone": "+33 1 23 45 67 89",
+    "rights": "Tous droits réservés",
     "language": "Langue"
   },
-  "error": {
-    "loadProduct": "Impossible de charger les informations du produit. Veuillez réessayer plus tard.",
-    "invalidEmail": "Veuillez entrer une adresse email valide",
-    "requiredField": "Ce champ est requis",
-    "invalidCredentials": "Email ou mot de passe incorrect"
+  "about": {
+    "title": "À Propos",
+    "description": "Nous sommes dédiés à la création de montres d'exception qui allient savoir-faire traditionnel et innovation moderne. Nos montres sont plus que de simples garde-temps ; ce sont des expressions d'excellence artistique et technique."
   },
-  "checkout": {
-    "title": "Commande",
-    "close": "Fermer le panneau",
-    "billing": {
-      "title": "Informations de facturation",
-      "email": "Email",
-      "emailPlaceholder": "Email",
-      "firstName": "Prénom",
-      "firstNamePlaceholder": "Jean",
-      "lastName": "Nom",
-      "lastNamePlaceholder": "Dupont",
-      "address": "Adresse",
-      "addressPlaceholder": "123 Rue Example",
-      "city": "Ville",
-      "cityPlaceholder": "Ville",
-      "postalCode": "Code postal",
-      "postalCodePlaceholder": "75000",
-      "country": "Pays",
-      "countrySelect": "Sélectionner un pays",
-      "countries": {
-        "FR": "France",
-        "US": "États-Unis",
-        "GB": "Royaume-Uni"
-      }
-    },
-    "submit": "Procéder au paiement",
-    "processing": "Traitement en cours...",
-    "success": {
-      "title": "Commande confirmée !",
-      "message": "Merci pour votre achat. Vous recevrez un email de confirmation sous peu.",
-      "backToHome": "Retour à l'accueil"
-    },
-    "cancel": {
-      "title": "Commande annulée",
-      "message": "Votre commande a été annulée. Aucun paiement n'a été effectué.",
-      "backToHome": "Retour à l'accueil"
-    }
-  },
-  "auth": {
-    "signIn": "Se connecter",
-    "signUp": "S'inscrire",
-    "loggedInAs": "Connecté en tant que",
-    "logout": "Se déconnecter",
-    "close": "Fermer",
-    "welcomeBack": "Bon retour !",
-    "createAccount": "Créer votre compte",
-    "noAccount": "Vous n'avez pas de compte ?",
-    "haveAccount": "Vous avez déjà un compte ?",
-    "name": "Nom",
-    "namePlaceholder": "Michel Lemaitre",
-    "nameError": "Le nom doit contenir au moins 2 caractères",
-    "email": "Email",
-    "emailPlaceholder": "votre email",
-    "emailError": "Veuillez entrer une adresse email valide",
-    "password": "Mot de passe",
-    "passwordPlaceholder": "••••••••",
-    "passwordError": "Le mot de passe doit contenir au moins 6 caractères",
-    "passwordRequirement": "Le mot de passe doit contenir au moins 6 caractères",
-    "authFailed": "L'authentification a échoué",
-    "forgotPassword": "Mot de passe oublié ?",
-    "resetPassword": "Réinitialiser le mot de passe",
-    "or": "ou"
-  },
-  "common": {
-    "loading": "Chargement...",
-    "error": "Erreur",
-    "success": "Succès",
-    "cancel": "Annuler",
-    "save": "Enregistrer",
-    "delete": "Supprimer",
-    "edit": "Modifier",
-    "back": "Retour"
+  "contact": {
+    "title": "Contactez-nous",
+    "description": "Nous aimerions avoir de vos nouvelles. Que vous ayez une question sur nos produits, besoin d'aide pour votre achat, ou que vous souhaitiez en savoir plus sur notre savoir-faire, notre équipe est là pour vous aider."
   },
   "cart": {
-    "title": "Panier",
-    "close": "Fermer le panier",
+    "title": "Votre Panier",
+    "close": "Fermer",
+    "empty": "Votre panier est vide",
     "decrease": "Diminuer la quantité",
     "increase": "Augmenter la quantité",
     "remove": "Supprimer",
     "subtotal": "Sous-total",
-    "shipping": "Frais de livraison et taxes calculés à la commande",
-    "checkout": "Commander",
+    "shipping": "Livraison incluse",
     "or": "ou",
-    "continue": "Continuer les achats",
-    "empty": "Votre panier est vide"
+    "continue": "Continuer vos achats"
+  },
+  "checkout": {
+    "processing": "Traitement en cours...",
+    "submit": "Procéder au paiement"
+  },
+  "auth": {
+    "signIn": "Connexion",
+    "loggedInAs": "Connecté en tant que",
+    "logout": "Déconnexion"
+  },
+  "product": {
+    "variants": "Variantes",
+    "inStock": "En stock",
+    "outOfStock": "Rupture de stock",
+    "learnMore": "En savoir plus",
+    "buyNow": "Acheter maintenant"
+  },
+  "error": {
+    "loadProduct": "Une erreur est survenue lors du chargement du produit"
   }
 } 
