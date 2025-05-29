@@ -305,7 +305,7 @@ const handleSubmit = async () => {
     }
 
     // Store the token only on client side
-    if (process.client) {
+    if (import.meta.client) {
       localStorage.setItem('token', data.jwt);
       localStorage.setItem('user', JSON.stringify(data.user));
     }
@@ -318,4 +318,8 @@ const handleSubmit = async () => {
     isLoading.value = false;
   }
 };
+
+if (import.meta.client) {
+  document.body.style.overflow = '';
+}
 </script> 

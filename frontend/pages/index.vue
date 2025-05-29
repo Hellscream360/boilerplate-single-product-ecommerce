@@ -196,9 +196,4 @@ const localizedProductUrl = computed(() => {
     ? '/product' 
     : '/fr/product';
 });
-
-const handleBuyNow = () => {
-  // TODO: Integrate with Stripe Checkout
-  console.log('Processing purchase...')
-}
 </script>

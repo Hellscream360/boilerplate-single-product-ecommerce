@@ -27,7 +27,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       }
 
       const userData = await response.json();
-      console.log('User data:', userData);
       return userData;
     } catch (error) {
       console.error('Error fetching user:', error);
@@ -37,7 +36,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   // Initialize user on startup if token exists
   const initUser = async () => {
-    if (process.client) {
+    if (import.meta.client) {
       const token = localStorage.getItem('token');
       if (token) {
         user.value = await fetchUser(token);
@@ -46,7 +45,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   };
 
   // Call initUser on client-side only
-  if (process.client) {
+  if (import.meta.client) {
     initUser();
   }
 
@@ -77,7 +76,7 @@ export default defineNuxtPlugin((nuxtApp) => {
             const data = await response.json();
             
             // Store JWT token only on client side
-            if (process.client) {
+            if (import.meta.client) {
               localStorage.setItem('token', data.jwt);
             }
             
@@ -92,7 +91,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         },
 
         async logout() {
-          if (process.client) {
+          if (import.meta.client) {
             localStorage.removeItem('token');
           }
           user.value = null;

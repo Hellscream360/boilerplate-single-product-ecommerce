@@ -138,13 +138,6 @@ const router = useRouter();
 const isCartOpen = ref(false);
 const cart = useCart();
 
-// Log de la configuration
-console.log('API Configuration:', {
-  strapiUrl: config.public.strapiUrl,
-  hasToken: !!config.public.strapiToken,
-  locale: locale.value
-});
-
 const { data: productData, error, pending } = await useFetch<ProductResponse>('/api/products', {
   baseURL: config.public.strapiUrl,
   params: {
@@ -157,16 +150,6 @@ const { data: productData, error, pending } = await useFetch<ProductResponse>('/
   } : undefined
 });
 
-console.log('Réponse brute Strapi :', JSON.stringify(productData.value, null, 2));
-
-// Log de l'erreur si elle existe
-if (error.value) {
-  console.error('API Error:', error.value);
-}
-
-// Log de la réponse
-console.log('API Response:', productData.value);
-
 const product = computed(() => {
   if (error.value) {
     console.error('Error loading product:', error.value);
@@ -174,33 +157,12 @@ const product = computed(() => {
   }
   
   if (!productData.value?.data?.[0]) {
-    console.log('No product data found');
     return null;
   }
 
   const currentProduct = productData.value.data[0];
-  console.log('Product data structure:', {
-    id: currentProduct.id,
-    title: currentProduct.title,
-    hasVariants: !!currentProduct.variants,
-    variantsCount: currentProduct.variants?.length,
-    variants: currentProduct.variants,
-    relations: Object.keys(currentProduct)
-  });
   return currentProduct;
 });
-
-// Watch pour le débogage des variantes
-watch(product, (newProduct) => {
-  if (newProduct) {
-    console.log('Product variants debug:', {
-      hasVariants: !!newProduct.variants,
-      variantsCount: newProduct.variants?.length,
-      variants: newProduct.variants,
-      fullProduct: newProduct
-    });
-  }
-}, { immediate: true });
 
 const {
   selectedVariant,
@@ -230,18 +192,6 @@ watch(locale, async (newLocale) => {
   
   const path = newLocale === 'en' ? '/product' : '/fr/product';
   router.push(path);
-});
-
-// Prepare product data for checkout
-const checkoutProduct = computed(() => {
-  if (!product.value || !formattedImageUrl.value) return null;
-
-  return {
-    id: selectedVariant.value?.id || product.value.id,
-    title: `${product.value.title}${selectedVariant.value ? ` - ${selectedVariant.value.name}` : ''}`,
-    price: currentPrice.value,
-    image: formattedImageUrl.value,
-  };
 });
 
 const handleBuyNow = () => {

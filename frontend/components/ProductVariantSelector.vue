@@ -59,8 +59,7 @@ const cart = useCart();
 
 // Vérification de sécurité pour les variantes
 const safeVariants = computed(() => {
-  const variants = props.variants || [];
-  return [...variants].sort((a, b) => a.name.localeCompare(b.name));
+  return props.variants || [];
 });
 
 const selectedVariantId = ref<number | null>(props.initialVariantId || null);
@@ -75,7 +74,5 @@ const selectVariant = (variant: ProductVariant) => {
   if (!variant.available) return;
   selectedVariantId.value = variant.id;
   emit('select', variant);
-  
-  cart.addToCart(props.product, variant, props.quantity);
 };
 </script> 

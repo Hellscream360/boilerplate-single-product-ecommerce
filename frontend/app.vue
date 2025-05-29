@@ -9,8 +9,8 @@
           </NuxtLink>
         </div>
         <div class="flex items-center">
-          <CartButton class="mr-4" @click="isCartOpen = true" />
-          <AuthButton />
+          <AuthButton class="mr-4" />
+          <CartButton @click="isCartOpen = true" />
         </div>
       </nav>
     </header>
@@ -33,13 +33,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import Footer from '~/components/Footer.vue';
 import CartButton from '~/components/CartButton.vue';
 import CartPanel from '~/components/CartPanel.vue';
+import { useCartStore } from '~/stores/cart';
 
 const localePath = useLocalePath();
 const isCartOpen = ref(false);
+const cartStore = useCartStore();
+
+onMounted(() => {
+  cartStore.initCart();
+});
 
 const handleCheckout = () => {
   isCartOpen.value = false;
