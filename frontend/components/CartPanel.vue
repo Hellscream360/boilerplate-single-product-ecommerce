@@ -145,7 +145,6 @@ interface CartItem {
   quantity: number;
 }
 
-const { t } = useI18n();
 const cart = useCart();
 const config = useRuntimeConfig();
 const isLoading = ref(false);
@@ -160,12 +159,12 @@ const emit = defineEmits<{
   (e: 'checkout'): void;
 }>();
 
-// Empêcher le défilement du body quand le panier est ouvert
+// Prevent body scrolling when cart is open
 if (import.meta.client) {
   document.body.style.overflow = props.isOpen ? 'hidden' : '';
 }
 
-// Réactiver le défilement du body quand le panier est fermé
+// Re-enable body scrolling when cart is closed
 onUnmounted(() => {
   if (import.meta.client) {
     document.body.style.overflow = '';
@@ -177,7 +176,7 @@ const closeCart = () => {
 };
 
 const handleOutsideClick = (event: MouseEvent) => {
-  // Vérifie si le clic est en dehors du panneau
+  // Check if click is outside the panel
   const target = event.target as HTMLElement;
   if (!target.closest('.w-screen.max-w-md')) {
     closeCart();
@@ -236,13 +235,13 @@ const handleProceedToPayment = async () => {
     });
 
     if (response.url) {
-      // Vider le panier avant de rediriger vers Stripe
+      // Clear cart before redirecting to Stripe
       cart.clearCart();
       window.location.href = response.url;
     }
   } catch (err: any) {
     console.error('Payment error:', err);
-    error.value = err.message || 'Une erreur est survenue lors du paiement';
+    error.value = err.message || 'An error occurred during payment';
   } finally {
     isLoading.value = false;
   }

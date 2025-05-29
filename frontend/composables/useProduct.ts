@@ -5,7 +5,7 @@ export const useProduct = (product: Product | null) => {
   const selectedVariant = ref<ProductVariant | null>(null);
   const quantity = ref(1);
 
-  // Sélectionner la variante "Classic" par défaut
+  // Select "Classic" variant by default
   watch(() => product, (newProduct) => {
     if (newProduct?.variants) {
       const classicVariant = newProduct.variants.find(v => v.name === 'Classic');

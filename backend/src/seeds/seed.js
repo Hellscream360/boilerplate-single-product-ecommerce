@@ -13,32 +13,6 @@ module.exports = {
         }
       });
 
-      // Create a test order
-      const order = await strapi.entityService.create('api::order.order', {
-        data: {
-          total: 199.99,
-          status: 'completed',
-          customer: customer.id,
-          stripeSessionId: 'test_session_id',
-          shippingAddress: {
-            firstName: 'John',
-            lastName: 'Doe',
-            address: '123 Test Street',
-            city: 'Test City',
-            postalCode: '12345',
-            country: 'FR'
-          },
-          publishedAt: new Date()
-        }
-      });
-
-      // Update customer with order
-      await strapi.entityService.update('api::customer.customer', customer.id, {
-        data: {
-          orders: [order.id]
-        }
-      });
-
       // Create product in English
       const productEN = await strapi.entityService.create('api::product.product', {
         data: {
@@ -60,6 +34,26 @@ module.exports = {
             {
               title: 'Premium Sound Quality',
               description: 'High-fidelity audio with deep bass and crisp highs'
+            }
+          ],
+          variants: [
+            {
+              name: 'Black',
+              price: 199.99,
+              available: true,
+              stock: 50
+            },
+            {
+              name: 'White',
+              price: 219.99,
+              available: true,
+              stock: 30
+            },
+            {
+              name: 'Silver',
+              price: 229.99,
+              available: false,
+              stock: 0
             }
           ],
           publishedAt: new Date()
@@ -89,6 +83,26 @@ module.exports = {
               description: 'Audio haute-fidélité avec des basses profondes et des aigus cristallins'
             }
           ],
+          variants: [
+            {
+              name: 'Noir',
+              price: 199.99,
+              available: true,
+              stock: 50
+            },
+            {
+              name: 'Blanc',
+              price: 219.99,
+              available: true,
+              stock: 30
+            },
+            {
+              name: 'Argent',
+              price: 229.99,
+              available: false,
+              stock: 0
+            }
+          ],
           publishedAt: new Date()
         }
       });
@@ -106,38 +120,45 @@ module.exports = {
         }
       });
 
-      // Update order with product reference
-      await strapi.entityService.update('api::order.order', order.id, {
+      // Create a test order with variant
+      const order = await strapi.entityService.create('api::order.order', {
         data: {
-          product: productEN.id
-        }
-      });
-
-      // Create example order
-      await strapi.entityService.create('api::order.order', {
-        data: {
-          total: 199.99,
+          total: 219.99,
           status: 'completed',
-          stripeSessionId: 'cs_test_example123',
-          customerEmail: 'john.doe@example.com',
-          customerName: 'John Doe',
+          customer: customer.id,
+          stripeSessionId: 'test_session_id',
           shippingAddress: {
             firstName: 'John',
             lastName: 'Doe',
-            address: '123 Main Street',
-            city: 'New York',
-            postalCode: '10001',
-            country: 'US'
-          }
+            address: '123 Test Street',
+            city: 'Test City',
+            postalCode: '12345',
+            country: 'FR'
+          },
+          items: [
+            {
+              product: productEN.id,
+              variant: productEN.variants[1].id, // White variant
+              quantity: 1,
+              price: 219.99
+            }
+          ],
+          publishedAt: new Date()
+        }
+      });
+
+      // Update customer with order
+      await strapi.entityService.update('api::customer.customer', customer.id, {
+        data: {
+          orders: [order.id]
         }
       });
 
       console.log('✅ Seed completed successfully!');
       console.log('Created:');
       console.log('- 1 Customer');
-      console.log('- 1 Order');
-      console.log('- 1 Product (with EN and FR translations)');
-      console.log('- Example order');
+      console.log('- 1 Order with variant');
+      console.log('- 1 Product (with EN and FR translations and variants)');
 
     } catch (error) {
       console.error('🚫 Error during seed:', error);

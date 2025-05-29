@@ -1,5 +1,4 @@
 import { ref, computed } from 'vue';
-import type { Ref } from 'vue';
 
 export const useAdmin = () => {
   const { $strapi } = useNuxtApp();

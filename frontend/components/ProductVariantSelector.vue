@@ -57,7 +57,7 @@ const emit = defineEmits<{
 
 const cart = useCart();
 
-// Vérification de sécurité pour les variantes
+// Security check for variants
 const safeVariants = computed(() => {
   return props.variants || [];
 });

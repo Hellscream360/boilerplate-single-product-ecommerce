@@ -99,12 +99,12 @@ onUnmounted(() => {
 });
 
 const handleClickOutside = (event) => {
-  // Si on clique sur le bouton du menu, on ne fait rien (laisse le toggle gérer)
+  // If we click on the menu button, do nothing (let the toggle handle it)
   if (buttonRef.value && buttonRef.value.contains(event.target)) {
     return;
   }
   
-  // Si on clique en dehors du menu, on le ferme
+  // If we click outside the menu, close it
   if (menuRef.value && !menuRef.value.contains(event.target)) {
     isMenuOpen.value = false;
   }
