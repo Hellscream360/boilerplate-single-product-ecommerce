@@ -1,12 +1,19 @@
 {
   "product": {
-    "inStock": "En stock",
+    "title": "Produit",
+    "description": "Description",
+    "features": "Caractéristiques",
+    "addToCart": "Ajouter au panier",
+    "buyNow": "Acheter maintenant",
     "outOfStock": "Rupture de stock",
-    "buyNow": "Acheter maintenant →",
-    "learnMore": "En savoir plus",
+    "inStock": "En stock",
     "quantity": "Quantité",
+    "decrease": "Diminuer la quantité",
+    "increase": "Augmenter la quantité",
+    "learnMore": "En savoir plus",
     "total": "Total",
-    "discoverProduct": "Découvrir le produit"
+    "discoverProduct": "Découvrir le produit",
+    "variants": "Modèles disponibles"
   },
   "features": {
     "title": "Pourquoi nous choisir ?",
@@ -40,25 +47,24 @@
     "invalidCredentials": "Email ou mot de passe incorrect"
   },
   "checkout": {
-    "title": "Paiement",
+    "title": "Commande",
     "close": "Fermer le panneau",
-    "orderSummary": "Récapitulatif de la commande",
     "billing": {
       "title": "Informations de facturation",
       "email": "Email",
       "emailPlaceholder": "Email",
       "firstName": "Prénom",
-      "firstNamePlaceholder": "Michel",
+      "firstNamePlaceholder": "Jean",
       "lastName": "Nom",
-      "lastNamePlaceholder": "Lemaitre",
+      "lastNamePlaceholder": "Dupont",
       "address": "Adresse",
-      "addressPlaceholder": "123 Nom de rue",
+      "addressPlaceholder": "123 Rue Example",
       "city": "Ville",
       "cityPlaceholder": "Ville",
       "postalCode": "Code postal",
       "postalCodePlaceholder": "75000",
       "country": "Pays",
-      "countrySelect": "Sélectionnez un pays",
+      "countrySelect": "Sélectionner un pays",
       "countries": {
         "FR": "France",
         "US": "États-Unis",
@@ -68,14 +74,14 @@
     "submit": "Procéder au paiement",
     "processing": "Traitement en cours...",
     "success": {
-      "title": "Commande Confirmée !",
+      "title": "Commande confirmée !",
       "message": "Merci pour votre achat. Vous recevrez un email de confirmation sous peu.",
-      "backToHome": "Retour à l'Accueil"
+      "backToHome": "Retour à l'accueil"
     },
     "cancel": {
-      "title": "Commande Annulée",
+      "title": "Commande annulée",
       "message": "Votre commande a été annulée. Aucun paiement n'a été effectué.",
-      "backToHome": "Retour à l'Accueil"
+      "backToHome": "Retour à l'accueil"
     }
   },
   "auth": {
@@ -112,5 +118,18 @@
     "delete": "Supprimer",
     "edit": "Modifier",
     "back": "Retour"
+  },
+  "cart": {
+    "title": "Panier",
+    "close": "Fermer le panier",
+    "decrease": "Diminuer la quantité",
+    "increase": "Augmenter la quantité",
+    "remove": "Supprimer",
+    "subtotal": "Sous-total",
+    "shipping": "Frais de livraison et taxes calculés à la commande",
+    "checkout": "Commander",
+    "or": "ou",
+    "continue": "Continuer les achats",
+    "empty": "Votre panier est vide"
   }
 } 

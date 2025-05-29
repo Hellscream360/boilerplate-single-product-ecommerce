@@ -16,7 +16,7 @@
       <section class="relative overflow-hidden bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <div class="space-y-8">
+            <div class="order-2 lg:order-1 space-y-8">
               <h1 class="text-4xl md:text-5xl font-bold text-gray-900">
                 {{ productTitle }}
               </h1>
@@ -52,7 +52,7 @@
                 </a>
               </div>
             </div>
-            <div class="flex items-center justify-center">
+            <div class="order-1 lg:order-2 flex items-center justify-center">
               <img
                 :src="productImage"
                 :alt="productTitle"
