@@ -9,7 +9,8 @@
           </NuxtLink>
         </div>
         <div class="flex items-center">
-          <AuthButton />
+          <AuthButton class="mr-4" />
+          <CartButton @click="isCartOpen = true" />
         </div>
       </nav>
     </header>
@@ -21,12 +22,35 @@
 
     <!-- Footer -->
     <Footer />
+
+    <!-- Cart Panel -->
+    <CartPanel
+      :is-open="isCartOpen"
+      @close="isCartOpen = false"
+      @checkout="handleCheckout"
+    />
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
 import Footer from '~/components/Footer.vue';
+import CartButton from '~/components/CartButton.vue';
+import CartPanel from '~/components/CartPanel.vue';
+import { useCartStore } from '~/stores/cart';
+
 const localePath = useLocalePath();
+const isCartOpen = ref(false);
+const cartStore = useCartStore();
+
+onMounted(() => {
+  cartStore.initCart();
+});
+
+const handleCheckout = () => {
+  isCartOpen.value = false;
+  // TODO: Implement checkout logic
+};
 </script>
 
 

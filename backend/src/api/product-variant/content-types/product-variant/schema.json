@@ -1,11 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "products",
+  "collectionName": "product_variants",
   "info": {
-    "singularName": "product",
-    "pluralName": "products",
-    "displayName": "Product",
-    "description": "Single product with translations"
+    "singularName": "product-variant",
+    "pluralName": "product-variants",
+    "displayName": "Product Variant",
+    "description": "Product variants (e.g., colors, sizes)"
   },
   "options": {
     "draftAndPublish": true
@@ -16,7 +16,7 @@
     }
   },
   "attributes": {
-    "title": {
+    "name": {
       "type": "string",
       "required": true,
       "pluginOptions": {
@@ -25,19 +25,10 @@
         }
       }
     },
-    "slug": {
-      "type": "uid",
-      "targetField": "title",
-      "required": true
-    },
-    "description": {
-      "type": "text",
+    "sku": {
+      "type": "string",
       "required": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "unique": true
     },
     "price": {
       "type": "decimal",
@@ -59,22 +50,26 @@
         }
       }
     },
-    "image": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
     "available": {
       "type": "boolean",
-      "required": true
+      "required": true,
+      "default": true
     },
-    "features": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "product": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product.product",
+      "inversedBy": "variants"
+    },
+    "attributes": {
       "type": "json",
       "required": true,
       "pluginOptions": {
@@ -82,12 +77,6 @@
           "localized": true
         }
       }
-    },
-    "variants": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::product-variant.product-variant",
-      "mappedBy": "product"
     }
   }
 }

@@ -11,28 +11,28 @@
     </div>
 
     <!-- Product details -->
-    <div v-else class="grid md:grid-cols-2 gap-8">
+    <div v-else-if="product" class="grid md:grid-cols-2 gap-8">
       <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
         <img
-          v-if="productImage"
-          :src="productImage"
-          :alt="productTitle"
+          v-if="formattedImageUrl"
+          :src="formattedImageUrl"
+          :alt="product.title"
           class="max-w-full h-auto object-contain"
         />
       </div>
 
       <div class="flex flex-col">
-        <h1 class="text-3xl font-bold text-gray-900">{{ productTitle }}</h1>
+        <h1 class="text-3xl font-bold text-gray-900">{{ product.title }}</h1>
         <div class="mt-4">
-          <p class="text-2xl font-semibold text-gray-900">${{ productPrice }}</p>
+          <p class="text-2xl font-semibold text-gray-900">${{ currentPrice }}</p>
         </div>
         <div class="mt-4">
-          <p class="text-gray-600">{{ productDescription }}</p>
+          <p class="text-gray-600">{{ product.description }}</p>
         </div>
 
         <!-- Availability status -->
         <div class="mt-4">
-          <div v-if="productAvailable" class="flex items-center text-green-600">
+          <div v-if="isAvailable" class="flex items-center text-green-600">
             <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
             </svg>
@@ -46,6 +46,16 @@
           </div>
         </div>
 
+        <!-- Variant selector -->
+        <ProductVariantSelector
+          v-if="product && product.variants && product.variants.length > 0"
+          :variants="product.variants"
+          :initial-variant-id="selectedVariant?.id"
+          :product="product"
+          :quantity="quantity"
+          @select="selectVariant"
+        />
+
         <!-- Quantity selector -->
         <div class="mt-8">
           <label for="quantity" class="block text-sm font-medium text-gray-700">{{ $t('product.quantity') }}</label>
@@ -54,7 +64,7 @@
               type="button"
               class="rounded-lg bg-gray-100 p-3 text-gray-600 shadow-sm transition duration-150 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-200"
               :disabled="quantity <= 1"
-              @click="quantity--"
+              @click="decrementQuantity"
             >
               <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
@@ -70,7 +80,7 @@
             <button 
               type="button"
               class="rounded-lg bg-gray-100 p-3 text-gray-600 shadow-sm transition duration-150 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-200"
-              @click="quantity++"
+              @click="incrementQuantity"
             >
               <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -81,76 +91,93 @@
 
         <!-- Total price -->
         <div class="mt-4">
-          <p class="text-sm text-gray-600">{{ $t('product.total') }}: <span class="font-semibold text-gray-900">${{ (productPrice * quantity).toFixed(2) }}</span></p>
+          <p class="text-sm text-gray-600">{{ $t('product.total') }}: <span class="font-semibold text-gray-900">${{ totalPrice.toFixed(2) }}</span></p>
         </div>
 
-        <div class="mt-8">
+        <div class="mt-8 flex gap-4">
           <button
-            class="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg transition-colors"
-            :class="productAvailable ? 'hover:bg-indigo-700' : 'opacity-50 cursor-not-allowed'"
-            @click="handleBuyNow"
-            :disabled="!productAvailable"
+            class="flex-1 bg-white text-indigo-600 border border-indigo-600 py-3 px-6 rounded-lg transition-colors"
+            :class="isAvailable ? 'hover:bg-indigo-50' : 'opacity-50 cursor-not-allowed'"
+            @click="handleAddToCart"
+            :disabled="!isAvailable"
           >
-            {{ productAvailable ? $t('product.buyNow') : $t('product.outOfStock') }}
+            {{ isAvailable ? $t('product.addToCart') : $t('product.outOfStock') }}
+          </button>
+          <button
+            class="flex-1 bg-indigo-600 text-white py-3 px-6 rounded-lg transition-colors"
+            :class="isAvailable ? 'hover:bg-indigo-700' : 'opacity-50 cursor-not-allowed'"
+            @click="handleBuyNow"
+            :disabled="!isAvailable"
+          >
+            {{ isAvailable ? $t('product.buyNow') : $t('product.outOfStock') }}
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Checkout Panel -->
-    <CheckoutPanel
-      v-if="checkoutProduct"
-      :is-open="isCheckoutOpen"
-      :product="checkoutProduct"
-      :quantity="quantity"
-      @close="isCheckoutOpen = false"
-      @order-created="handleOrderCreated"
+    <!-- Cart Panel -->
+    <CartPanel
+      :is-open="isCartOpen"
+      @close="isCartOpen = false"
+      @checkout="handleCheckout"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  available: boolean;
-  image: Array<{
-    url: string;
-    formats?: {
-      large?: {
-        url: string;
-      };
-    };
-  }>;
-}
+import type { Product, ProductResponse } from '~/types/product';
+import { useProduct } from '~/composables/useProduct';
+import { useCart } from '~/composables/useCart';
 
 const config = useRuntimeConfig();
 const { locale } = useI18n();
 const router = useRouter();
-const isCheckoutOpen = ref(false);
-const quantity = ref(1);
+const isCartOpen = ref(false);
+const cart = useCart();
 
-const { data: productData, error, pending } = await useFetch<{ data: Product[] }>('/api/products', {
+const { data: productData, error, pending } = await useFetch<ProductResponse>('/api/products', {
   baseURL: config.public.strapiUrl,
   params: {
     'populate': '*',
     'pagination[pageSize]': 1,
     'locale': locale.value
   },
-  headers: {
+  headers: config.public.strapiToken ? {
     'Authorization': `Bearer ${config.public.strapiToken}`
-  }
+  } : undefined
 });
+
+const product = computed(() => {
+  if (error.value) {
+    console.error('Error loading product:', error.value);
+    return null;
+  }
+  
+  if (!productData.value?.data?.[0]) {
+    return null;
+  }
+
+  const currentProduct = productData.value.data[0];
+  return currentProduct;
+});
+
+const {
+  selectedVariant,
+  quantity,
+  currentPrice,
+  isAvailable,
+  formattedImageUrl,
+  totalPrice,
+  selectVariant,
+  incrementQuantity,
+  decrementQuantity
+} = useProduct(product.value);
 
 // Watch for locale changes and update the URL
 watch(locale, async (newLocale) => {
-  // Refetch product data with new locale
   const { data } = await useFetch('/api/products', {
     baseURL: config.public.strapiUrl,
     params: {
@@ -158,70 +185,37 @@ watch(locale, async (newLocale) => {
       'pagination[pageSize]': 1,
       'locale': newLocale
     },
-    headers: {
+    headers: config.public.strapiToken ? {
       'Authorization': `Bearer ${config.public.strapiToken}`
-    },
+    } : undefined
   });
   
-  // Navigate to the localized URL
   const path = newLocale === 'en' ? '/product' : '/fr/product';
   router.push(path);
 });
 
-const product = computed(() => {
-  if (error.value || !productData.value?.data?.[0]) {
-    return null;
-  }
-  return productData.value.data[0];
-});
-
-const productTitle = computed(() => product.value?.title);
-const productDescription = computed(() => product.value?.description);
-const productPrice = computed(() => product.value?.price ?? 0);
-const productAvailable = computed(() => product.value?.available);
-const productImage = computed(() => {
-  const firstImage = product.value?.image?.[0];
-  // Using large format for product page
-  const imageUrl = firstImage?.formats?.large?.url || firstImage?.url;
-  
-  if (!imageUrl) return null;
-  
-  // If the image URL is already absolute, return it as is
-  if (imageUrl.startsWith('http')) {
-    return imageUrl;
-  }
-  
-  // Make sure we have a fully qualified URL for Stripe
-  const baseUrl = process.env.NODE_ENV === 'production' 
-    ? config.public.strapiUrl 
-    : 'http://localhost:1337';
-  
-  return new URL(imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`, baseUrl).toString();
-});
-
-// Prepare product data for checkout
-const checkoutProduct = computed(() => {
-  if (!product.value) return null;
-
-  const imageUrl = productImage.value;
-  if (!imageUrl) return null;
-
-  return {
-    id: product.value.id,
-    title: product.value.title,
-    price: product.value.price,
-    image: imageUrl,
-  };
-});
-
 const handleBuyNow = () => {
-  if (productAvailable.value) {
-    isCheckoutOpen.value = true;
+  if (isAvailable.value && product.value) {
+    cart.addToCart(product.value, selectedVariant.value, quantity.value);
+    isCartOpen.value = true;
+    setTimeout(() => {
+      const checkoutButton = document.querySelector('[data-checkout-button]') as HTMLButtonElement;
+      if (checkoutButton && !checkoutButton.disabled) {
+        checkoutButton.click();
+      }
+    }, 100);
   }
 };
 
-const handleOrderCreated = (orderId: number) => {
-  console.log('Order created:', orderId);
-  // You might want to redirect to a success page or show a success message
+const handleAddToCart = () => {
+  if (isAvailable.value && product.value) {
+    cart.addToCart(product.value, selectedVariant.value, quantity.value);
+    isCartOpen.value = true;
+  }
+};
+
+const handleCheckout = () => {
+  isCartOpen.value = false;
+  // You might want to redirect to a checkout page or show a checkout form
 };
 </script> 

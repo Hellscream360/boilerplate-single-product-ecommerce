@@ -1,12 +1,19 @@
 {
   "product": {
-    "inStock": "In stock",
-    "outOfStock": "Out of stock",
-    "buyNow": "Buy now →",
-    "learnMore": "Learn more",
+    "title": "Product",
+    "description": "Description",
+    "features": "Features",
+    "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
+    "outOfStock": "Out of Stock",
+    "inStock": "In Stock",
     "quantity": "Quantity",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "learnMore": "Learn more",
     "total": "Total",
-    "discoverProduct": "Discover the product"
+    "discoverProduct": "Discover the product",
+    "variants": "Available variants"
   },
   "features": {
     "title": "Why choose us?",
@@ -42,7 +49,6 @@
   "checkout": {
     "title": "Checkout",
     "close": "Close panel",
-    "orderSummary": "Order Summary",
     "billing": {
       "title": "Billing Information",
       "email": "Email",
@@ -112,5 +118,18 @@
     "delete": "Delete",
     "edit": "Edit",
     "back": "Back"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "close": "Close cart",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "remove": "Remove",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping and taxes calculated at checkout",
+    "checkout": "Checkout",
+    "or": "or",
+    "continue": "Continue Shopping",
+    "empty": "Your cart is empty"
   }
 } 

@@ -68,7 +68,7 @@ const buttonRef = ref(null);
 
 onMounted(async () => {
   try {
-    const token = process.client ? localStorage.getItem('token') : null;
+    const token = import.meta.client ? localStorage.getItem('token') : null;
     
     if (token) {
       // Fetch user from Strapi
@@ -84,7 +84,7 @@ onMounted(async () => {
     }
 
     // Add click event listener to close menu when clicking outside
-    if (process.client) {
+    if (import.meta.client) {
       document.addEventListener('click', handleClickOutside);
     }
   } catch (error) {
@@ -93,7 +93,7 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
-  if (process.client) {
+  if (import.meta.client) {
     document.removeEventListener('click', handleClickOutside);
   }
 });
@@ -112,7 +112,7 @@ const handleClickOutside = (event) => {
 
 const handleAuthSuccess = async (data) => {
   // Store the JWT token only on client side
-  if (process.client) {
+  if (import.meta.client) {
     localStorage.setItem('token', data.jwt);
   }
   
@@ -140,7 +140,7 @@ const handleAuthSuccess = async (data) => {
 };
 
 const handleLogout = () => {
-  if (process.client) {
+  if (import.meta.client) {
     localStorage.removeItem('token');
   }
   user.value = null;
